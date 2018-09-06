@@ -1,0 +1,44 @@
+Segment  Base   Top    High   Length
+-------- ------ ------ ------ -------
+bss      D031F6 D031F6 D13FD6      0h
+header   D1A87F D1A882             3h
+icon     D1A882 D1A9D8           156h
+launcher D1A9D8 D1AA28            50h
+libs     D1AA28 D1AA57            2Fh
+startup  D1AA57 D1AA92            3Bh
+cleanup  D1AA92 D1AAA6            14h
+exit     D1AAA6 D1AAAC             6h
+code     D1AAAC D1B093           5E7h
+data     D1B093 D1B4B7           424h
+strsect  D1B4B7 D1B4B7             0h
+text     D1B4B7 D1B557            A0h
+
+Label                                 Value
+-----------------------------------   ------
+__findlibload                       = D1A9D8
+__program_icon                      = D1A887
+__program_description               = D1A989
+__ccleanup                          = D1AA92
+_errno                              = D008DC
+_init                               = D1A882
+_exit                               = D1AAA8
+__exit                              = D1AA84
+__exitsp                            = D1AA84
+__errsp                             = D1AA84
+_watermelon_data                    = D1B0B5
+_main                               = D1AAAC
+__ftol                              = 00027C
+__frameset                          = D1B085
+__ildix                             = 000148
+__imul_b                            = 000158
+__imul_b                            = 000150
+__istix                             = 00018C
+__lldix                             = 0001C0
+__setflag                           = 000218
+_gfx_Begin                          = D1AA31
+_gfx_End                            = D1AA35
+_gfx_SetColor                       = D1AA39
+_gfx_FillScreen                     = D1AA3D
+_gfx_Line                           = D1AA41
+_gfx_ScaledTransparentSprite_NoClip = D1AA45
+_kb_Scan                            = D1AA53

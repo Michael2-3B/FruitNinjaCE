@@ -1,0 +1,934 @@
+; Zilog eZ80 ANSI C Compiler Release 3.4
+; -optsize -noreduceopt -nomodsect -peephole -globalopt
+; -localcse -const=ROM 
+	FILE	"..\SRC\MAIN.C"
+	.assume ADL=1
+	SEGMENT CODE
+;    1	/*
+;    2	 *--------------------------------------
+;    3	 * Program Name:CSWIPE
+;    4	 * Author:Michael2_3B
+;    5	 * License:MIT
+;    6	 * Description:An experimental C program to swipe like you do in fruit ninja.
+;    7	 *--------------------------------------
+;    8	*/
+;    9	
+;   10	/* Keep these headers */
+;   11	#include <stdbool.h>
+;   12	#include <stddef.h>
+;   13	#include <stdint.h>
+;   14	#include <tice.h>
+;   15	
+;   16	/* Standard headers (recommended) */
+;   17	#include <math.h>
+;   18	#include <stdio.h>
+;   19	#include <stdlib.h>
+;   20	#include <string.h>
+;   21	
+;   22	#include <graphx.h>
+;   23	#include <keypadc.h>
+;   24	
+;   25	/* Include the sprite data */
+;   26	#include "gfx/logo_gfx.h"
+;   27	
+;   28	/* Put your function prototypes here */
+;   29	
+;   30	/* Put all your globals here */
+;   31	
+;   32	void main(void) {
+_main:
+	LD	HL,-6203
+	CALL	__frameset
+;   33	    /* Fill in the body of the main function here */
+;   34	    kb_key_t key;
+;   35	    int xList[1000];
+;   36	    int yList[1000];
+;   37	    int i=0;
+	LD	BC,0
+	LD	(IX+-13),BC
+;   38	    int index=0;
+	LD	(IX+-7),BC
+;   39	    int x;
+;   40	    int y;
+;   41	    int gameTime = 0;
+;   42	    double speed = 1;
+;   43	    double entityX[20] = {20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	LD	HL,IX
+	LD	BC,-179
+	ADD	HL,BC
+	LD	DE,HL
+	LD	HL,_0temp0
+	LD	BC,80
+	LDIR	
+;   44	    double entityY[20] = {120,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240};
+	LEA	DE,IX+-99
+	LD	HL,_1temp1
+	LD	BC,80
+	LDIR	
+;   45	    gfx_Begin();
+	CALL	_gfx_Begin
+;   46	    gfx_FillScreen(gfx_blue);
+	LD	BC,16
+	PUSH	BC
+	CALL	_gfx_FillScreen
+	POP	BC
+;   47	    gfx_SetColor(gfx_white);
+	LD	BC,255
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;   48	    gfx_ScaledTransparentSprite_NoClip(watermelon, entityX[0], entityY[0], 3, 3);
+	LD	BC,3
+	PUSH	BC
+	PUSH	BC
+	LD	BC,(IX+-99)
+	LD	A,(IX+-96)
+	CALL	__ftol
+	LD	B,0
+	PUSH	BC
+	LD	BC,-179
+	CALL	__lldix
+	LD	A,E
+	LD	BC,HL
+	CALL	__ftol
+	PUSH	BC
+	LD	BC,_watermelon_data
+	PUSH	BC
+	CALL	_gfx_ScaledTransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;   49	
+;   50	    do {
+L_92:
+;   51	    	kb_Scan();
+	CALL	_kb_Scan
+;   52	    	x=0;
+	LD	BC,0
+	LD	(IX+-10),BC
+;   53	    	y=0;
+	LD	(IX+-4),BC
+;   54	    	if (kb_Data[2]) {
+	LD	A,(16056340)
+	OR	A,A
+	JR	Z,L_28
+;   55	    		key = kb_Data[2];
+	LD	A,(16056340)
+	LD	(IX+-1),A
+;   56	    		x=32;
+	LD	BC,32
+	LD	(IX+-10),BC
+;   57	    		if(key == kb_Store)
+	LD	A,(IX+-1)
+	CP	A,2
+	JR	NZ,L_4
+;   58	    			y=188;
+	LD	BC,188
+	LD	(IX+-4),BC
+L_4:
+;   59	    		if(key == kb_Ln)
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	NZ,L_6
+;   60	    			y=154;
+	LD	BC,154
+	LD	(IX+-4),BC
+L_6:
+;   61	    		if(key == kb_Log)
+	LD	A,(IX+-1)
+	CP	A,8
+	JR	NZ,L_8
+;   62	    			y=120;
+	LD	BC,120
+	LD	(IX+-4),BC
+L_8:
+;   63	    		if(key == kb_Square)
+	LD	A,(IX+-1)
+	CP	A,16
+	JR	NZ,L_10
+;   64	    			y=85;
+	LD	BC,85
+	LD	(IX+-4),BC
+L_10:
+;   65	    		if(key == kb_Recip)
+	LD	A,(IX+-1)
+	CP	A,32
+	JR	NZ,L_12
+;   66	    			y=51;
+	LD	BC,51
+	LD	(IX+-4),BC
+L_12:
+;   67	    		if(key == kb_Math)
+	LD	A,(IX+-1)
+	CP	A,64
+	JR	NZ,L_28
+;   68	    			y=17;
+	LD	BC,17
+	LD	(IX+-4),BC
+;   69	    	}
+L_28:
+;   70	    	if (kb_Data[3]) {
+	LD	A,(16056342)
+	OR	A,A
+	JR	Z,L_43
+;   71	    		key = kb_Data[3];
+	LD	A,(16056342)
+	LD	(IX+-1),A
+;   72	    		x=96;
+	LD	BC,96
+	LD	(IX+-10),BC
+;   73	    		if(key == kb_0)
+	LD	A,(IX+-1)
+	CP	A,1
+	JR	NZ,L_16
+;   74	    			y=222;
+	LD	BC,222
+	LD	(IX+-4),BC
+L_16:
+;   75	    		if(key == kb_1)
+	LD	A,(IX+-1)
+	CP	A,2
+	JR	NZ,L_18
+;   76	    			y=188;
+	LD	BC,188
+	LD	(IX+-4),BC
+L_18:
+;   77	    		if(key == kb_4)
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	NZ,L_20
+;   78	    			y=154;
+	LD	BC,154
+	LD	(IX+-4),BC
+L_20:
+;   79	    		if(key == kb_7)
+	LD	A,(IX+-1)
+	CP	A,8
+	JR	NZ,L_22
+;   80	    			y=120;
+	LD	BC,120
+	LD	(IX+-4),BC
+L_22:
+;   81	    		if(key == kb_Comma)
+	LD	A,(IX+-1)
+	CP	A,16
+	JR	NZ,L_24
+;   82	    			y=85;
+	LD	BC,85
+	LD	(IX+-4),BC
+L_24:
+;   83	    		if(key == kb_Sin)
+	LD	A,(IX+-1)
+	CP	A,32
+	JR	NZ,L_26
+;   84	    			y=51;
+	LD	BC,51
+	LD	(IX+-4),BC
+L_26:
+;   85	    		if(key == kb_Apps)
+	LD	A,(IX+-1)
+	CP	A,64
+	JR	NZ,L_43
+;   86	    			y=17;
+	LD	BC,17
+	LD	(IX+-4),BC
+;   87	    	}
+L_43:
+;   88	    	if (kb_Data[4]){
+	LD	A,(16056344)
+	OR	A,A
+	JR	Z,L_58
+;   89	    		key = kb_Data[4];
+	LD	A,(16056344)
+	LD	(IX+-1),A
+;   90	    		x=160;
+	LD	BC,160
+	LD	(IX+-10),BC
+;   91	    		if(key == kb_DecPnt)
+	LD	A,(IX+-1)
+	CP	A,1
+	JR	NZ,L_31
+;   92	    			y=222;
+	LD	BC,222
+	LD	(IX+-4),BC
+L_31:
+;   93	    		if(key == kb_2)
+	LD	A,(IX+-1)
+	CP	A,2
+	JR	NZ,L_33
+;   94	    			y=188;
+	LD	BC,188
+	LD	(IX+-4),BC
+L_33:
+;   95	    		if(key == kb_5)
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	NZ,L_35
+;   96	    			y=154;
+	LD	BC,154
+	LD	(IX+-4),BC
+L_35:
+;   97	    		if(key == kb_8)
+	LD	A,(IX+-1)
+	CP	A,8
+	JR	NZ,L_37
+;   98	    			y=120;
+	LD	BC,120
+	LD	(IX+-4),BC
+L_37:
+;   99	    		if(key == kb_LParen)
+	LD	A,(IX+-1)
+	CP	A,16
+	JR	NZ,L_39
+;  100	    			y=85;
+	LD	BC,85
+	LD	(IX+-4),BC
+L_39:
+;  101	    		if(key == kb_Cos)
+	LD	A,(IX+-1)
+	CP	A,32
+	JR	NZ,L_41
+;  102	    			y=51;
+	LD	BC,51
+	LD	(IX+-4),BC
+L_41:
+;  103	    		if(key == kb_Prgm)
+	LD	A,(IX+-1)
+	CP	A,64
+	JR	NZ,L_58
+;  104	    			y=17;
+	LD	BC,17
+	LD	(IX+-4),BC
+;  105	    	}
+L_58:
+;  106	    	if (kb_Data[5]) {
+	LD	A,(16056346)
+	OR	A,A
+	JR	Z,L_73
+;  107	    		key = kb_Data[5];
+	LD	A,(16056346)
+	LD	(IX+-1),A
+;  108	    		x=224;
+	LD	BC,224
+	LD	(IX+-10),BC
+;  109	    		if(key == kb_Chs)
+	LD	A,(IX+-1)
+	CP	A,1
+	JR	NZ,L_46
+;  110	    			y=222;
+	LD	BC,222
+	LD	(IX+-4),BC
+L_46:
+;  111	    		if(key == kb_3)
+	LD	A,(IX+-1)
+	CP	A,2
+	JR	NZ,L_48
+;  112	    			y=188;
+	LD	BC,188
+	LD	(IX+-4),BC
+L_48:
+;  113	    		if(key == kb_6)
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	NZ,L_50
+;  114	    			y=154;
+	LD	BC,154
+	LD	(IX+-4),BC
+L_50:
+;  115	    		if(key == kb_9)
+	LD	A,(IX+-1)
+	CP	A,8
+	JR	NZ,L_52
+;  116	    			y=120;
+	LD	BC,120
+	LD	(IX+-4),BC
+L_52:
+;  117	    		if(key == kb_RParen)
+	LD	A,(IX+-1)
+	CP	A,16
+	JR	NZ,L_54
+;  118	    			y=85;
+	LD	BC,85
+	LD	(IX+-4),BC
+L_54:
+;  119	    		if(key == kb_Tan)
+	LD	A,(IX+-1)
+	CP	A,32
+	JR	NZ,L_56
+;  120	    			y=51;
+	LD	BC,51
+	LD	(IX+-4),BC
+L_56:
+;  121	    		if(key == kb_Vars)
+	LD	A,(IX+-1)
+	CP	A,64
+	JR	NZ,L_73
+;  122	    			y=17;
+	LD	BC,17
+	LD	(IX+-4),BC
+;  123	    	}
+L_73:
+;  124	    	if (kb_Data[6]) {
+	LD	A,(16056348)
+	OR	A,A
+	JR	Z,L_89
+;  125	    		key = kb_Data[6];
+	LD	A,(16056348)
+	LD	(IX+-1),A
+;  126	    		x=288;
+	LD	BC,288
+	LD	(IX+-10),BC
+;  127	    		if(key == kb_Enter)
+	LD	A,(IX+-1)
+	CP	A,1
+	JR	NZ,L_61
+;  128	    			y=222;
+	LD	BC,222
+	LD	(IX+-4),BC
+L_61:
+;  129	    		if(key == kb_Add)
+	LD	A,(IX+-1)
+	CP	A,2
+	JR	NZ,L_63
+;  130	    			y=188;
+	LD	BC,188
+	LD	(IX+-4),BC
+L_63:
+;  131	    		if(key == kb_Sub)
+	LD	A,(IX+-1)
+	CP	A,4
+	JR	NZ,L_65
+;  132	    			y=154;
+	LD	BC,154
+	LD	(IX+-4),BC
+L_65:
+;  133	    		if(key == kb_Mul)
+	LD	A,(IX+-1)
+	CP	A,8
+	JR	NZ,L_67
+;  134	    			y=120;
+	LD	BC,120
+	LD	(IX+-4),BC
+L_67:
+;  135	    		if(key == kb_Div)
+	LD	A,(IX+-1)
+	CP	A,16
+	JR	NZ,L_69
+;  136	    			y=85;
+	LD	BC,85
+	LD	(IX+-4),BC
+L_69:
+;  137	    		if(key == kb_Power)
+	LD	A,(IX+-1)
+	CP	A,32
+	JR	NZ,L_71
+;  138	    			y=51;
+	LD	BC,51
+	LD	(IX+-4),BC
+L_71:
+;  139	    		if(key == kb_Clear)
+	LD	A,(IX+-1)
+	CP	A,64
+	JR	NZ,L_89
+;  140	    			y=17;
+	LD	BC,17
+	LD	(IX+-4),BC
+;  141	    	}
+L_89:
+;  142	    	if(y>0){
+	LD	BC,(IX+-4)
+	OR	A,A
+	SBC	HL,HL
+	OR	A,A
+	SBC	HL,BC
+	JP	P,L_88
+;  143	    		if(index>0){
+	LD	BC,(IX+-7)
+	OR	A,A
+	SBC	HL,HL
+	OR	A,A
+	SBC	HL,BC
+	CALL	__setflag
+	JP	P,L_78
+;  144	    			if(x==xList[index-1] && y==yList[index-1])
+	LD	BC,(IX+-7)
+	DEC	BC
+	LD	HL,3
+	CALL	__imulu
+	LD	(IX+-16),BC
+	LD	(IX+-19),HL
+	LD	HL,IX
+	LD	BC,-6179
+	ADD	HL,BC
+	LD	BC,(IX+-19)
+	ADD	HL,BC
+	LD	HL,(HL)
+	OR	A,A
+	LD	BC,(IX+-10)
+	SBC	HL,BC
+	JR	NZ,L_78
+	LD	HL,IX
+	LD	BC,-3179
+	ADD	HL,BC
+	LD	BC,(IX+-19)
+	ADD	HL,BC
+	LD	HL,(HL)
+	OR	A,A
+	LD	BC,(IX+-4)
+	SBC	HL,BC
+	JR	NZ,L_78
+;  145	    				index--;
+	LD	BC,(IX+-16)
+	LD	(IX+-7),BC
+;  146	    		}
+L_78:
+;  147	    		xList[index] = x;
+	LD	HL,(IX+-7)
+	LD	BC,HL
+	ADD	HL,HL
+	ADD	HL,BC
+	LD	BC,HL
+	LD	HL,IX
+	LD	DE,-6179
+	ADD	HL,DE
+	LD	DE,BC
+	ADD	HL,DE
+	LD	DE,(IX+-10)
+	LD	(HL),DE
+;  148	    		yList[index] = y;
+	LD	HL,IX
+	LD	DE,-3179
+	ADD	HL,DE
+	ADD	HL,BC
+	LD	BC,(IX+-4)
+	LD	(HL),BC
+;  149	    		if(index>0)
+	LD	BC,(IX+-7)
+	OR	A,A
+	SBC	HL,HL
+	OR	A,A
+	SBC	HL,BC
+	CALL	__setflag
+	JP	P,L_81
+;  150	    			gfx_Line(xList[index-1],yList[index-1],x,y);
+	LD	BC,(IX+-7)
+	DEC	BC
+	LD	HL,3
+	CALL	__imulu
+	LD	BC,HL
+	PUSH	BC
+	PUSH	HL
+	LD	HL,DE
+	LD	BC,-6200	; spill
+	CALL	__istix
+	POP	HL
+	POP	BC
+	LD	DE,BC
+	PUSH	BC
+	PUSH	HL
+	LD	HL,DE	; unspill
+	LD	BC,-6203	; spill
+	CALL	__istix
+	POP	HL
+	LD	BC,-6200	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	DE,HL
+	POP	HL
+	POP	BC
+	LD	HL,(IX+-4)
+	PUSH	HL
+	LD	HL,(IX+-10)
+	PUSH	HL
+	LD	HL,IX
+	ADD	HL,DE
+	PUSH	BC
+	LD	BC,-6203	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	DE,HL
+	POP	HL
+	POP	BC
+	ADD	HL,DE
+	LD	DE,(HL)
+	PUSH	DE
+	LD	HL,IX
+	LD	DE,-6179
+	ADD	HL,DE
+	ADD	HL,BC
+	LD	BC,(HL)
+	PUSH	BC
+	CALL	_gfx_Line
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+L_81:
+;  151	    		index++;
+	LD	BC,(IX+-7)
+	INC	BC
+	LD	(IX+-7),BC
+;  152	    		i=0;
+	LD	BC,0
+	LD	(IX+-13),BC
+;  153	    		if(index==1000)
+	LD	HL,(IX+-7)
+	OR	A,A
+	LD	BC,1000
+	SBC	HL,BC
+	JR	NZ,L_91
+;  154	    			index=0;
+	LD	BC,0
+	LD	(IX+-7),BC
+;  155	    	} else {
+	JR	L_91
+L_88:
+;  156	    		if(i < 101)
+	LD	BC,101
+	LD	HL,(IX+-13)
+	OR	A,A
+	SBC	HL,BC
+	CALL	__setflag
+	JP	P,L_86
+;  157	    			i++;
+	LD	BC,(IX+-13)
+	INC	BC
+	LD	(IX+-13),BC
+L_86:
+;  158	    		if(i==100){
+	LD	BC,100
+	LD	HL,(IX+-13)
+	OR	A,A
+	SBC	HL,BC
+	JR	NZ,L_91
+;  159	    			gfx_FillScreen(gfx_blue);
+	LD	BC,16
+	PUSH	BC
+	CALL	_gfx_FillScreen
+	POP	BC
+;  160	    			gfx_ScaledTransparentSprite_NoClip(watermelon, entityX[0], entityY[0], 3, 3);
+	LD	BC,3
+	PUSH	BC
+	PUSH	BC
+	LD	BC,(IX+-99)
+	LD	A,(IX+-96)
+	CALL	__ftol
+	LD	B,0
+	PUSH	BC
+	LD	BC,-179
+	CALL	__lldix
+	LD	A,E
+	LD	BC,HL
+	CALL	__ftol
+	PUSH	BC
+	LD	BC,_watermelon_data
+	PUSH	BC
+	CALL	_gfx_ScaledTransparentSprite_NoClip
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  161	    			index=0;
+	LD	BC,0
+	LD	(IX+-7),BC
+;  162	    		}
+;  163	    	}
+L_91:
+;  164	    	if(index>3){
+	LD	BC,(IX+-7)
+	LD	HL,3
+	OR	A,A
+	SBC	HL,BC
+	CALL	__setflag
+	JP	P,L_93
+;  165	    		gfx_SetColor(gfx_blue);
+	LD	BC,16
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  166	    		gfx_Line(xList[index-4],yList[index-4],xList[index-3],yList[index-3]);
+	LD	IY,(IX+-7)
+	LEA	BC,IY+-3
+	LD	HL,3
+	CALL	__imulu
+	LD	DE,HL
+	LEA	BC,IY+-4
+	LD	HL,3
+	CALL	__imulu
+	LD	BC,HL
+	LD	HL,IX
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC
+	LD	BC,-6182	; spill
+	CALL	__istix
+	POP	HL
+	POP	BC
+	LD	BC,-3179
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC	; unspill
+	LD	BC,-6185	; spill
+	CALL	__istix
+	POP	HL
+	POP	BC
+	LD	BC,-6182	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC
+	LD	BC,-6182	; spill
+	CALL	__istix
+	POP	HL
+	POP	BC
+	LD	BC,-6185	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	ADD	HL,BC
+	LD	BC,-6182	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC
+	LD	BC,-6188	; spill
+	CALL	__istix
+	POP	HL
+	POP	BC
+	LD	BC,DE
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC	; unspill
+	LD	BC,-6191	; spill
+	CALL	__istix
+	POP	HL
+	POP	BC
+	LD	BC,-6188	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC
+	LD	BC,-6188	; spill
+	CALL	__istix
+	POP	HL
+	POP	BC
+	LD	BC,-6191	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	ADD	HL,BC
+	LD	BC,-6188	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	LD	HL,(HL)
+	PUSH	HL
+	LD	HL,IX
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC
+	LD	BC,-6194	; spill
+	CALL	__istix
+	POP	HL
+	POP	BC
+	LD	BC,-6179
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC	; unspill
+	LD	BC,-6197	; spill
+	CALL	__istix
+	POP	HL
+	POP	BC
+	LD	BC,-6194	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	PUSH	BC
+	PUSH	HL
+	LD	HL,BC
+	LD	BC,-6194	; spill
+	CALL	__istix
+	POP	HL
+	POP	BC
+	LD	BC,-6197	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	ADD	HL,BC
+	LD	BC,-6194	; unspill
+	PUSH	HL
+	CALL	__ildix
+	LD	BC,HL
+	POP	HL
+	ADD	HL,DE
+	LD	DE,(HL)
+	PUSH	DE
+	LD	HL,IX
+	LD	DE,-3179
+	ADD	HL,DE
+	LD	DE,BC
+	ADD	HL,DE
+	LD	DE,(HL)
+	PUSH	DE
+	LD	HL,IX
+	LD	DE,-6179
+	ADD	HL,DE
+	ADD	HL,BC
+	LD	BC,(HL)
+	PUSH	BC
+	CALL	_gfx_Line
+	POP	BC
+	POP	BC
+	POP	BC
+	POP	BC
+;  167	    		gfx_SetColor(gfx_white);
+	LD	BC,255
+	PUSH	BC
+	CALL	_gfx_SetColor
+	POP	BC
+;  168	    	}
+;  169	    	/*if(gameTime > 5000){
+;  170	    		gfx_ScaledTransparentSprite_NoClip(watermelon, entityX[0], entityY[0], 3, 3);
+;  171	    		entityY[0] -= (int)speed;
+;  172	    		speed -= 0.01;
+;  173	    		if(entityY[0] > 240)
+;  174	    			gameTime = 0;
+;  175	    	}
+;  176	    	gameTime++;*/
+;  177	    } while (kb_Data[1] != kb_2nd);
+L_93:
+	LD	A,(16056338)
+	CP	A,32
+	JR	NZ,L_92
+;  178	
+;  179	/*gfx_ScaledTransparentSprite_NoClip(watermelon, 128, 0, 3, 3);*/
+;  180	
+;  181	
+;  182	    /*while (key!=128){
+;  183	    	i++;
+;  184	    	key=kb_AnyKey();
+;  185	    	if (key){
+;  186	    		gfx_Circle_NoClip(160,222.859-(34.286*(log10(key)/log10(2))),10);
+;  187	    		gfx_SetTextXY(1,1);
+;  188	    		gfx_PrintUInt(key, 3);
+;  189	    		i=0;
+;  190	    	}
+;  191	    	if (i==500)
+;  192	    		gfx_FillScreen(gfx_white);
+;  193	    }*/
+;  194	    
+;  195	    gfx_End();
+	CALL	_gfx_End
+;  196	
+;  197	}
+	LD	SP,IX
+	POP	IX
+	RET	
+
+
+;**************************** _main ***************************
+;Name                         Addr/Register   Size   Type
+;_gfx_End                            IMPORT  -----   function
+;_gfx_Line                           IMPORT  -----   function
+;_kb_Scan                            IMPORT  -----   function
+;_watermelon_data                    IMPORT   1026   variable
+;_gfx_ScaledTransparentSprite_NoClip      IMPORT  -----   function
+;_gfx_SetColor                       IMPORT  -----   function
+;_gfx_FillScreen                     IMPORT  -----   function
+;_gfx_Begin                          IMPORT  -----   function
+;_1temp1                             STATIC     80   variable
+;_0temp0                             STATIC     80   variable
+;xList                              IX-6179   3000   variable
+;yList                              IX-3179   3000   variable
+;entityX                             IX-179     80   variable
+;entityY                              IX-99     80   variable
+;G_0                                  IX-19      3   variable
+;G_1                                  IX-16      3   variable
+;i                                    IX-13      3   variable
+;x                                    IX-10      3   variable
+;index                                 IX-7      3   variable
+;y                                     IX-4      3   variable
+;key                                   IX-1      1   variable
+
+
+; Stack Frame Size: 6209 (bytes)
+;       Spill Code: 0 (instruction)
+
+
+	SEGMENT TEXT
+_0temp0:
+	DF	20.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+	DF	0.0
+_1temp1:
+	DF	120.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	DF	240.0
+	XREF _watermelon_data:ROM
+	XREF _kb_Scan:ROM
+	XREF _gfx_ScaledTransparentSprite_NoClip:ROM
+	XREF _gfx_Line:ROM
+	XREF _gfx_FillScreen:ROM
+	XREF _gfx_SetColor:ROM
+	XREF _gfx_End:ROM
+	XREF _gfx_Begin:ROM
+	XREF __imulu:ROM
+	XREF __ftol:ROM
+	XREF __ildix:ROM
+	XREF __istix:ROM
+	XREF __lldix:ROM
+	XREF __frameset:ROM
+	XREF __setflag:ROM
+	XDEF _main
+	END
