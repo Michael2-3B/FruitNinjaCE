@@ -8,7 +8,7 @@
 NAME        ?= CSWIPE
 COMPRESSED  ?= NO
 ICON        ?= iconc.png
-DESCRIPTION ?= "Swipe the calculator keys just like you would swipe the screen in fruit ninja."
+DESCRIPTION ?= "Swipe calculator keys to slice fruits!"
 
 # ----------------------------
 

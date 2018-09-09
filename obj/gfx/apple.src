@@ -1,10 +1,10 @@
 ; Zilog eZ80 ANSI C Compiler Release 3.4
 ; -optsize -noreduceopt -nomodsect -peephole -globalopt
 ; -localcse -const=ROM 
-	FILE	"..\..\SRC\GFX\WATERMELON.C"
+	FILE	"..\..\SRC\GFX\APPLE.C"
 	.assume ADL=1
 	SEGMENT DATA
-_watermelon_data:
+_apple_data:
 	DB	32
 	DB	32
 	DB	0
@@ -212,12 +212,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -242,16 +236,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -273,19 +257,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	20
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	8
-	DB	8
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -303,22 +274,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	8
-	DB	8
-	DB	8
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	20
-	DB	8
-	DB	8
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -335,23 +290,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	6
-	DB	6
-	DB	6
 	DB	0
 	DB	0
 	DB	0
@@ -366,24 +304,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	6
-	DB	6
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -397,26 +317,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	8
-	DB	20
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -429,26 +329,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	8
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	20
-	DB	20
-	DB	20
-	DB	8
-	DB	8
-	DB	6
-	DB	6
-	DB	6
-	DB	6
 	DB	0
 	DB	0
 	DB	0
@@ -461,26 +341,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	8
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -493,25 +353,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	6
-	DB	6
-	DB	8
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -525,25 +366,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	6
-	DB	6
-	DB	6
 	DB	0
 	DB	0
 	DB	0
@@ -557,25 +379,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	8
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -590,23 +393,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	6
-	DB	20
-	DB	20
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	20
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -622,22 +408,10 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	14
+	DB	14
 	DB	0
 	DB	0
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -658,17 +432,6 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	20
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
-	DB	8
 	DB	0
 	DB	0
 	DB	0
@@ -677,6 +440,7 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	14
 	DB	0
 	DB	0
 	DB	0
@@ -707,6 +471,8 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	14
+	DB	14
 	DB	0
 	DB	0
 	DB	0
@@ -737,6 +503,7 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	14
 	DB	0
 	DB	0
 	DB	0
@@ -763,8 +530,15 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
 	DB	0
+	DB	14
+	DB	14
 	DB	0
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -786,6 +560,19 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	13
+	DB	13
+	DB	14
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -805,6 +592,20 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	13
+	DB	17
+	DB	13
+	DB	13
+	DB	17
+	DB	13
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -822,6 +623,22 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	13
+	DB	17
+	DB	17
+	DB	13
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -838,6 +655,23 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	13
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -853,6 +687,23 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	13
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -868,6 +719,23 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -883,6 +751,23 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -898,6 +783,23 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -913,7 +815,23 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -930,7 +848,21 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -948,8 +880,21 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -967,7 +912,21 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -986,6 +945,19 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -1007,9 +979,15 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
+	DB	17
+	DB	17
+	DB	17
 	DB	0
 	DB	0
 	DB	0
@@ -1031,11 +1009,33 @@ _watermelon_data:
 	DB	0
 	DB	0
 	DB	0
-	XDEF _watermelon_data
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	DB	0
+	XDEF _apple_data
 ;    1	// convpng v6.8
 ;    2	#include <stdint.h>
 ;    3	#include "logo_gfx.h"
 ;    4	
 ;    5	// 8 bpp image
-;    6	uint8_t watermelon_data[1026] = {
+;    6	uint8_t apple_data[1026] = {
 	END

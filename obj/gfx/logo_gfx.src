@@ -6,13 +6,30 @@
 	SEGMENT DATA
 _logo_gfx_pal:
 	DW	65535
+	DW	31744
+	DW	33760
+	DW	31
+	DW	28705
+	DW	23539
 	DW	4418
-	DW	37281
+	DW	32643
 	DW	38339
+	DW	13228
+	DW	39329
+	DW	5925
+	DW	59116
+	DW	42695
+	DW	15651
+	DW	46369
+	DW	51591
+	DW	9092
+	DW	450
+	DW	4643
+	DW	37281
 	XDEF _logo_gfx_pal
 ;    1	// convpng v6.8
 ;    2	#include <stdint.h>
 ;    3	#include "logo_gfx.h"
 ;    4	
-;    5	uint16_t logo_gfx_pal[4] = {
+;    5	uint16_t logo_gfx_pal[21] = {
 	END
