@@ -1,6 +1,6 @@
 # FruitNinjaCE
 Fruit Ninja on the TI-84+ CE!
 
-This code is open source, and the program is available, but please be careful when trying the .8xp! The code is under development and your calculator is subject to possible RAM clears.
+This code is open source, and is under heavy development! RAM clears are very possible, but I will try to get any kinks worked out as I go.
 
 ![Current Screenshot](https://raw.githubusercontent.com/Michael2-3B/FruitNinjaCE/master/devScreenshots/update.png)
