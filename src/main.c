@@ -31,25 +31,14 @@
 void throwFruit(gfx_sprite_t *fruitname, int curX, int curY, int angle, int velocity);
 void moveEnts();
 
-/*
-gfx_sprite_t *watermelon_out = gfx_MallocSprite(50,50);
-gfx_sprite_t *apple_out = gfx_MallocSprite(50,50);
-gfx_sprite_t *pear_out = gfx_MallocSprite(50,50);
-gfx_sprite_t *pineapple_out = gfx_MallocSprite(50,50);
-gfx_sprite_t *strawberry_out = gfx_MallocSprite(50,50);
-
-gfx_ScaleSprite(watermelon, watermelon_out);
-gfx_ScaleSprite(apple, apple_out);
-gfx_ScaleSprite(pear, pear_out);
-gfx_ScaleSprite(pineapple, pineapple_out);
-gfx_ScaleSprite(strawberry, strawberry_out);
-*/
-
 /* Put all your globals here */
 double entX[20], entAng[20], entVel[20];
 double entY[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 gfx_sprite_t *entName[20];
 gfx_sprite_t *sN[5] = {watermelon, apple, pear, pineapple, strawberry};
+gfx_sprite_t *sS[10] = {watermelon_top, watermelon_bottom, apple_top, apple_bottom, pear_top, pear_bottom, pineapple_top, pineapple_bottom, strawberry_top, strawberry_bottom};
+gfx_sprite_t *splitTop;
+gfx_sprite_t *splitBottom;
 const int s=2;
 int eC=0;
 
@@ -57,8 +46,8 @@ void main(void) {
     /* Fill in the body of the main function here */
     kb_key_t key;
     int xList[1000], yList[1000];
-    int i=0, index=0, gameTime=0, fat=0, x, y, j, randX;
-    bool up=true;
+    int i=0, index=0, gameTime=0, fat=0, x, y, j, c, randX;
+    bool up=true, flag=false;
     double speed = 1;
     gfx_Begin();
     gfx_SetDrawBuffer();
@@ -74,7 +63,7 @@ void main(void) {
     	if(eC > 0)
     		moveEnts();
 
-    	if(gameTime == 25){
+    	if(gameTime == 50){
     		randX = (int)(rand() % 320);
     		throwFruit(sN[rand()%5], randX, 240, rand()*PI, 6);
     		gameTime = 0;
@@ -150,6 +139,25 @@ void main(void) {
     			gfx_Line(xList[index-1],yList[index-1],x,y);
     			if(fat > 0)
     				gfx_Line(xList[index-1],yList[index-1]-1,x,y-1);
+    			if(eC > 0){
+    				for(j=0; j<20; j++){
+    					if(entX[j] > xList[index-1] && entX[j]+15 < x || entY[j] > yList[index-1] && entY[j]+15 < y){
+    						flag=false;
+    						for(c=0; c<4; c++){
+    							if(entName[j] == sN[c]){
+    								splitTop = sS[2*c];
+    								splitBottom = sS[2*c+1];
+    								flag = true;
+    							}
+    						}
+    						if(flag==true){
+    							throwFruit(splitTop, entX[j], entY[j], entAng[j], 1);
+    							throwFruit(splitBottom, entX[j], entY[j]+15, entAng[j], 0);
+    							entY[j] = 0;
+    						}
+    					}
+    				}
+    			}
     		}
     		index++;
     		i=0;
@@ -195,7 +203,7 @@ void moveEnts(){
 			entY[j] -= entVel[j];
 			entVel[j] -= 0.1;
 			entX[j] += 3*cos(entAng[j]);
-			if(entY[j] >= 240 || entX[j] >= 320 || entX[j] <= 0){
+			if(entY[j] >= 240 || entX[j] >= 320 || entX[j] <= -32){
 				entY[j] = 0;
 				eC--;
 			}

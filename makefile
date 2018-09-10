@@ -5,7 +5,7 @@
 # Set COMPRESSED to "YES" to create a compressed program
 # ----------------------------
 
-NAME        ?= CSWIPE
+NAME        ?= FRTNINJA
 COMPRESSED  ?= NO
 ICON        ?= iconc.png
 DESCRIPTION ?= "Swipe calculator keys to slice fruits!"
