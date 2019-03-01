@@ -38,6 +38,12 @@ bool lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float 
 void print_string_centered(const char *str, int y, int offset, uint8_t c);
 
 /* Put all your globals here */
+// entX and entY is x and y values of sprites.
+// entAng is the angle at which they are thrown
+// entVel is the velocity at which they are thrown
+// entRot is the sprites' rotation amount on the screen
+// when fruits are thrown, entName gets loaded with sprites from sN[], so as to specify which fruit it is at what index
+// and of course, these arrays are parallel so that the values at the matching indices give info for the same sprite
 double entX[20], entAng[20], entVel[20], entRot[20];
 double entY[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 gfx_sprite_t *entName[20];
@@ -47,7 +53,7 @@ gfx_sprite_t *splitTop;
 gfx_sprite_t *splitBottom;
 const int s=2;
 int eC=0, gameTime=0;
-gfx_UninitedSprite(sprite_buffer, 32, 32);
+gfx_UninitedSprite(sprite_buffer, 32, 32); //sprite buffer for rotating sprites
 
 void main(void) {
     /* Fill in the body of the main function here */
@@ -209,6 +215,7 @@ void main(void) {
         /* and more */
         /* hopefully that clears up a little bit of things */
 
+	//if there was a swipe over the keys
     	if(y>0){
     		if(index>0){
     			//If screen location is same as before
@@ -217,24 +224,29 @@ void main(void) {
     				fat++; //increase line thickness
     			}
     		}
+		//put screen swipe locations in array
     		xList[index] = x;
     		yList[index] = y;
+		
+		//if there is an active line in the array from swiping
     		if(index>0){
     			gfx_Line(xList[index-1],yList[index-1],x,y);
-    			if(fat > 0)
+    			if(fat > 0) //fatter line
     				gfx_Line(xList[index-1],yList[index-1]-1,x,y-1);
-    			if(eC > 0){
+    			if(eC > 0){ //if entity count on the screen is greater than 0
     				for(j=0; j<=20; j++){
     					//Detect if line touches sprite
     					if(isSliced(xList[index-1],yList[index-1],x,y,j)){
-    						if(entName[j] == sN[6]){
+						//Something was sliced
+    						if(entName[j] == sN[6]){ //bomb was sliced
     							//YOU HIT A BOMB!!!
     							animateExplosion(entX[j]+16, entY[j]+16);
     							bombHit = true;
-    						} else {
+    						} else { //fruit was sliced
     							flag=false;
-    							for(c=0; c<=5; c++){
+    							for(c=0; c<=6; c++){
     								if(entName[j] == sN[c]){
+									//split fruit
     									splitTop = sS[2*c];
     									splitBottom = sS[2*c+1];
     									flag = true;
@@ -280,11 +292,14 @@ void main(void) {
     		i=0;
     		if(index==1000)
     			index=0;
-    	} else {
-    		if(i < 101){
+    	} else { //there was not a swipe over the keys
+    		if(i < 10){
+			//increment i up to 10
+			//this is the delay between when there is no longer key input and when the lines erase
     			i++;
     		}
     		if(i==10){
+			//if a key hasn't been pressed within the time of i being incremented 10 times, reset values
     			index=0;
     			fat=0;
     		}
