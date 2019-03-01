@@ -2,15 +2,17 @@ opened convpng.ini
 
 --- logo_gfx (C) ---
 building palette with [256] available indices ...
-built palette with [23] indices.
+built palette with [32] indices.
 palette quality : 100.00%
 transparent color index : 0
 transparent color : 0xFFFF
-15:
+19:
+ bomb : 100.00%
  strawberry : 100.00%
  watermelon : 100.00%
  pineapple : 100.00%
  apple : 100.00%
+ red_apple : 100.00%
  pear : 100.00%
  watermelon_top : 100.00%
  watermelon_bottom : 100.00%
@@ -22,6 +24,8 @@ transparent color : 0xFFFF
  pear_bottom : 100.00%
  apple_top : 100.00%
  apple_bottom : 100.00%
+ red_apple_top : 100.00%
+ red_apple_bottom : 100.00%
 
 converted in 0 s
 

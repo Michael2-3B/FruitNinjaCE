@@ -6,6 +6,11 @@
 
 #define logo_gfx_transparent_color_index 0
 
+#define bomb_width 32
+#define bomb_height 32
+#define bomb_size 1026
+extern uint8_t bomb_data[1026];
+#define bomb ((gfx_sprite_t*)bomb_data)
 #define strawberry_width 32
 #define strawberry_height 32
 #define strawberry_size 1026
@@ -26,6 +31,11 @@ extern uint8_t pineapple_data[1026];
 #define apple_size 1026
 extern uint8_t apple_data[1026];
 #define apple ((gfx_sprite_t*)apple_data)
+#define red_apple_width 32
+#define red_apple_height 32
+#define red_apple_size 1026
+extern uint8_t red_apple_data[1026];
+#define red_apple ((gfx_sprite_t*)red_apple_data)
 #define pear_width 32
 #define pear_height 32
 #define pear_size 1026
@@ -81,7 +91,17 @@ extern uint8_t apple_top_data[1026];
 #define apple_bottom_size 1026
 extern uint8_t apple_bottom_data[1026];
 #define apple_bottom ((gfx_sprite_t*)apple_bottom_data)
-#define sizeof_logo_gfx_pal 46
-extern uint16_t logo_gfx_pal[23];
+#define red_apple_top_width 32
+#define red_apple_top_height 32
+#define red_apple_top_size 1026
+extern uint8_t red_apple_top_data[1026];
+#define red_apple_top ((gfx_sprite_t*)red_apple_top_data)
+#define red_apple_bottom_width 32
+#define red_apple_bottom_height 32
+#define red_apple_bottom_size 1026
+extern uint8_t red_apple_bottom_data[1026];
+#define red_apple_bottom ((gfx_sprite_t*)red_apple_bottom_data)
+#define sizeof_logo_gfx_pal 64
+extern uint16_t logo_gfx_pal[32];
 
 #endif
