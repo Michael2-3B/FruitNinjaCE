@@ -41,6 +41,16 @@ extern uint8_t red_apple_data[1026];
 #define pear_size 1026
 extern uint8_t pear_data[1026];
 #define pear ((gfx_sprite_t*)pear_data)
+#define grapes_width 32
+#define grapes_height 32
+#define grapes_size 1026
+extern uint8_t grapes_data[1026];
+#define grapes ((gfx_sprite_t*)grapes_data)
+#define kiwi_width 32
+#define kiwi_height 32
+#define kiwi_size 1026
+extern uint8_t kiwi_data[1026];
+#define kiwi ((gfx_sprite_t*)kiwi_data)
 #define watermelon_top_width 32
 #define watermelon_top_height 32
 #define watermelon_top_size 1026
@@ -101,7 +111,27 @@ extern uint8_t red_apple_top_data[1026];
 #define red_apple_bottom_size 1026
 extern uint8_t red_apple_bottom_data[1026];
 #define red_apple_bottom ((gfx_sprite_t*)red_apple_bottom_data)
-#define sizeof_logo_gfx_pal 64
-extern uint16_t logo_gfx_pal[32];
+#define grape_top_width 32
+#define grape_top_height 32
+#define grape_top_size 1026
+extern uint8_t grape_top_data[1026];
+#define grape_top ((gfx_sprite_t*)grape_top_data)
+#define grape_bottom_width 32
+#define grape_bottom_height 32
+#define grape_bottom_size 1026
+extern uint8_t grape_bottom_data[1026];
+#define grape_bottom ((gfx_sprite_t*)grape_bottom_data)
+#define kiwi_top_width 32
+#define kiwi_top_height 32
+#define kiwi_top_size 1026
+extern uint8_t kiwi_top_data[1026];
+#define kiwi_top ((gfx_sprite_t*)kiwi_top_data)
+#define kiwi_bottom_width 32
+#define kiwi_bottom_height 32
+#define kiwi_bottom_size 1026
+extern uint8_t kiwi_bottom_data[1026];
+#define kiwi_bottom ((gfx_sprite_t*)kiwi_bottom_data)
+#define sizeof_logo_gfx_pal 90
+extern uint16_t logo_gfx_pal[45];
 
 #endif
