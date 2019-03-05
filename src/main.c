@@ -42,10 +42,7 @@ void keyToXY();
 // entAng is the angle at which they are thrown
 // entVel is the velocity at which they are thrown
 // entRot is the sprites' rotation amount on the screen
-<<<<<<< HEAD
 // entRotSpeed is how fast the sprite rotates
-=======
->>>>>>> e9873b9e650808fd8cb95a36456762c1b5220d06
 // when fruits are thrown, entName gets loaded with sprites from sN[], so as to specify which fruit it is at what index
 // and of course, these arrays are parallel so that the values at the matching indices give info for the same sprite
 double entX[20], entAng[20], entVel[20], entRot[20];
@@ -67,11 +64,8 @@ gfx_sprite_t *splitTop;
 gfx_sprite_t *splitBottom;
 const int s=2;
 int eC=0, gameTime=0;
-<<<<<<< HEAD
 int x=0, y=0;
 kb_key_t key;
-=======
->>>>>>> e9873b9e650808fd8cb95a36456762c1b5220d06
 gfx_UninitedSprite(sprite_buffer, 32, 32); //sprite buffer for rotating sprites
 
 void main(void) {
@@ -522,7 +516,6 @@ void main(void) {
         /* and more */
         /* hopefully that clears up a little bit of things */
 
-<<<<<<< HEAD
         //if there was a swipe over the keys
         if(y>0){
             if(index>0){
@@ -615,99 +608,6 @@ void main(void) {
         }
 
         gfx_BlitBuffer();
-=======
-	//if there was a swipe over the keys
-    	if(y>0){
-    		if(index>0){
-    			//If screen location is same as before
-    			if(x==xList[index-1] && y==yList[index-1]){
-    				index--; //go back to the same index as before
-    				fat++; //increase line thickness
-    			}
-    		}
-		//put screen swipe locations in array
-    		xList[index] = x;
-    		yList[index] = y;
-		
-		//if there is an active line in the array from swiping
-    		if(index>0){
-    			gfx_Line(xList[index-1],yList[index-1],x,y);
-    			if(fat > 0) //fatter line
-    				gfx_Line(xList[index-1],yList[index-1]-1,x,y-1);
-    			if(eC > 0){ //if entity count on the screen is greater than 0
-    				for(j=0; j<=20; j++){
-    					//Detect if line touches sprite
-    					if(isSliced(xList[index-1],yList[index-1],x,y,j)){
-						//Something was sliced
-    						if(entName[j] == sN[6]){ //bomb was sliced
-    							//YOU HIT A BOMB!!!
-    							animateExplosion(entX[j]+16, entY[j]+16);
-    							bombHit = true;
-    						} else { //fruit was sliced
-    							flag=false;
-    							for(c=0; c<=6; c++){
-    								if(entName[j] == sN[c]){
-									//split fruit
-    									splitTop = sS[2*c];
-    									splitBottom = sS[2*c+1];
-    									flag = true;
-    								}
-    							}
-    							if(flag==true){
-    								//new X/Y for top of fruit and new X/Y for bottom of fruit after split
-    								int newX=0, newY=0, newXB=0, newYB=0;
-
-    								//Calculate these values based on current rotation
-    								if(entRot[j]<64){
-    									newX = entX[j];
-    									newY = entY[j];
-    									newXB = entX[j];
-    									newYB = entY[j]+16;
-    								} else if(entRot[j]<128){
-    									newX = entX[j]+32;
-    									newY = entY[j];
-    									newXB = entX[j]+16;
-    									newYB = entY[j];
-    								} else if(entRot[j]<192){
-    									newX = entX[j]+32;
-    									newY = entY[j]+32;
-    									newXB = entX[j]+32;
-    									newYB = entY[j]+16;
-    								} else if(entRot[j]<256){
-    									newX = entX[j];
-    									newY = entY[j]+32;
-    									newXB = entX[j]+16;
-    									newYB = entY[j]+32;
-    								}
-
-    								throwFruit(splitTop, newX, newY, entAng[j], 1, entRot[j]);
-    								throwFruit(splitBottom, newXB, newYB, entAng[j], 0, entRot[j]);
-    								entY[j] = 0;
-    							}
-    						}
-    					}
-    				}
-    			}
-    		}
-    		index++;
-    		i=0;
-    		if(index==1000)
-    			index=0;
-    	} else { //there was not a swipe over the keys
-    		if(i < 10){
-			//increment i up to 10
-			//this is the delay between when there is no longer key input and when the lines erase
-    			i++;
-    		}
-    		if(i==10){
-			//if a key hasn't been pressed within the time of i being incremented 10 times, reset values
-    			index=0;
-    			fat=0;
-    		}
-    	}
-
-    	gfx_SwapDraw();
->>>>>>> e9873b9e650808fd8cb95a36456762c1b5220d06
 
     } while (kb_Data[1] != kb_2nd && bombHit==false); //wait until 2nd key is hit or bomb is hit
     }
@@ -858,7 +758,6 @@ void print_string_centered(char *str, int y, int offset, uint8_t c) {
     gfx_SetTextFGColor(c);
     gfx_PrintStringXY(str, (LCD_WIDTH - gfx_GetStringWidth(str)) / 2 + offset, y);
 }
-<<<<<<< HEAD
 
 /* Convert keypress to x/y location for swiping */
 void keyToXY(){
@@ -931,5 +830,3 @@ void keyToXY(){
 
 
 
-=======
->>>>>>> e9873b9e650808fd8cb95a36456762c1b5220d06
