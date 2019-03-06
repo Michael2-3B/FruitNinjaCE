@@ -469,148 +469,149 @@ void main(void) {
     }while(button == 2 || button == 3);
 
     if(button==1){
-    gfx_SetColor(0);
-    gfx_SetTextFGColor(4);
-    gfx_SetTextScale(3,2);
-    flag = false;
+	    gfx_SetColor(0);
+	    gfx_SetTextFGColor(4);
+	    gfx_SetTextScale(3,2);
+	    flag = false;
 
 
-    /* ---------------------------------------------------------------------------------------------------------*/
-    /* START THE GAME!!!                                                                                        */
-    /* SLICE DEM FRUITS                                                                                         */
-    /* ---------------------------------------------------------------------------------------------------------*/
+	    /* ---------------------------------------------------------------------------------------------------------*/
+	    /* START THE GAME!!!                                                                                        */
+	    /* SLICE DEM FRUITS                                                                                         */
+	    /* ---------------------------------------------------------------------------------------------------------*/
 
-    do {
-        gameTime++;
-        kb_Scan();
-        gfx_FillScreen(5);
-        gfx_SetTextXY(2,2);
-        gfx_PrintInt(score, 1);
-        gfx_PrintStringXY(xxx, 248, 2);
+	    do {
+	        gameTime++;
+	        kb_Scan();
+	        gfx_FillScreen(5);
+	        gfx_SetTextXY(2,2);
+	        gfx_PrintInt(score, 1);
+	        gfx_PrintStringXY(xxx, 248, 2);
 
-        //if there are entities on the screen, move them
-        if(eC > 0)
-            moveEnts();
+	        //if there are entities on the screen, move them
+	        if(eC > 0)
+	            moveEnts();
 
-        //interval to throw fruits on the screen
-        if(gameTime == 100){
-            randX = (int)(30+(rand() % 260));
-            //throwFruit(fruitname,   x,     y, angle, velocity, rotation)
-            throwFruit(sN[rand()%(sprites-1)], randX, 240, PI, 6+(rand()%1), 0, rand()%5);
-            gameTime = 0;
-        }
+	        //interval to throw fruits on the screen
+	        if(gameTime == 100){
+	            randX = (int)(30+(rand() % 260));
+	            //throwFruit(fruitname,   x,     y, angle, velocity, rotation)
+	            throwFruit(sN[rand()%(sprites-1)], randX, 240, PI, 6+(rand()%1), 0, rand()%5);
+	            gameTime = 0;
+	        }
 
-        //throw a bomb on the screen
-        if((int)(rand() % 200)==100){
-            throwFruit(sN[sprites-1], (int)(30+(rand()%260)), 240, PI, 6+(rand()%1), 0, rand()%5);
-        }
+	        //throw a bomb on the screen
+	        if((int)(rand() % 200)==100){
+	            throwFruit(sN[sprites-1], (int)(30+(rand()%260)), 240, PI, 6+(rand()%1), 0, rand()%5);
+	        }
 
-        keyToXY();
+	        keyToXY();
 
-        /* If you are reading this, I would like to apologize if you can't follow along with the calculations */
-        /* I can't explain EVERYTHING, but basically I am taking the swiping data and constantly scanning to see */
-        /* if and when a fruit is sliced in half, then making sure to slice that specific fruit in half. */
-        /* I keep track of the amount of entities on the screen (which increments by 1 when the 2 halves of a fruit are put on) */
-        /* I keep track of which sprite is what with arrays, and use those arrays to go off of when referencing entities on the screen */
-        /* I keep track of rotations of sprites so hopefully I can maintain continuity when splitting things in half */
-        /* and more */
-        /* hopefully that clears up a little bit of things */
+	        /* If you are reading this, I would like to apologize if you can't follow along with the calculations */
+	        /* I can't explain EVERYTHING, but basically I am taking the swiping data and constantly scanning to see */
+	        /* if and when a fruit is sliced in half, then making sure to slice that specific fruit in half. */
+	        /* I keep track of the amount of entities on the screen (which increments by 1 when the 2 halves of a fruit are put on) */
+	        /* I keep track of which sprite is what with arrays, and use those arrays to go off of when referencing entities on the screen */
+	        /* I keep track of rotations of sprites so hopefully I can maintain continuity when splitting things in half */
+	        /* and more */
+	        /* hopefully that clears up a little bit of things */
 
-        //if there was a swipe over the keys
-        if(y>0){
-            if(index>0){
-                //If screen location is same as before
-                if(x==xList[index-1] && y==yList[index-1]){
-                    index--; //go back to the same index as before
-                    fat++; //increase line thickness
-                }
-            }
-        //put screen swipe locations in array
-            xList[index] = x;
-            yList[index] = y;
-        
-        //if there is an active line in the array from swiping
-            if(index>0){
-                gfx_Line(xList[index-1],yList[index-1],x,y);
-                if(fat > 0) //fatter line
-                    gfx_Line(xList[index-1],yList[index-1]-1,x,y-1);
-                if(eC > 0){ //if entity count on the screen is greater than 0
-                    for(j=0; j<=20; j++){
-                        //Detect if line touches sprite
-                        if(isSliced(xList[index-1],yList[index-1],x,y,j)){
-                        //Something was sliced
-                            if(entName[j] == sN[sprites-1]){ //bomb was sliced
-                                //YOU HIT A BOMB!!!
-                                animateExplosion(entX[j]+16, entY[j]+16);
-                                bombHit = true;
-                            } else { //fruit was sliced
-                                flag=false;
-                                for(c=0; c<=sprites-1; c++){
-                                    if(entName[j] == sN[c]){
-                                    //split fruit
-                                        splitTop = sS[2*c];
-                                        splitBottom = sS[2*c+1];
-                                        flag = true;
-                                        score++;
-                                    }
-                                }
-                                if(flag==true){
-                                    //new X/Y for top of fruit and new X/Y for bottom of fruit after split
-                                    int newX=0, newY=0, newXB=0, newYB=0;
+	        //if there was a swipe over the keys
+	        if(y>0){
+	            if(index>0){
+	                //If screen location is same as before
+	                if(x==xList[index-1] && y==yList[index-1]){
+	                    index--; //go back to the same index as before
+	                    fat++; //increase line thickness
+	                }
+	            }
+	        	//put screen swipe locations in array
+	            xList[index] = x;
+	            yList[index] = y;
+	        
+	        	//if there is an active line in the array from swiping
+	            if(index>0){
+	                gfx_Line(xList[index-1],yList[index-1],x,y);
+	                if(fat > 0) //fatter line
+	                    gfx_Line(xList[index-1],yList[index-1]-1,x,y-1);
+	                if(eC > 0){ //if entity count on the screen is greater than 0
+	                    for(j=0; j<=20; j++){
+	                        //Detect if line touches sprite
+	                        if(isSliced(xList[index-1],yList[index-1],x,y,j)){
+	                        //Something was sliced
+	                            if(entName[j] == sN[sprites-1]){ //bomb was sliced
+	                                //YOU HIT A BOMB!!!
+	                                animateExplosion(entX[j]+16, entY[j]+16);
+	                                bombHit = true;
+	                            } else { //fruit was sliced
+	                                flag=false;
+	                                for(c=0; c<=sprites-1; c++){
+	                                    if(entName[j] == sN[c]){
+	                                    //split fruit
+	                                        splitTop = sS[2*c];
+	                                        splitBottom = sS[2*c+1];
+	                                        flag = true;
+	                                        score++;
+	                                    }
+	                                }
+	                                if(flag==true){
+	                                    //new X/Y for top of fruit and new X/Y for bottom of fruit after split
+	                                    int newX=0, newY=0, newXB=0, newYB=0;
 
-                                    //Calculate these values based on current rotation
-                                    if(entRot[j]<64){
-                                        newX = entX[j];
-                                        newY = entY[j];
-                                        newXB = entX[j];
-                                        newYB = entY[j]+16;
-                                    } else if(entRot[j]<128){
-                                        newX = entX[j]+32;
-                                        newY = entY[j];
-                                        newXB = entX[j]+16;
-                                        newYB = entY[j];
-                                    } else if(entRot[j]<192){
-                                        newX = entX[j]+32;
-                                        newY = entY[j]+32;
-                                        newXB = entX[j]+32;
-                                        newYB = entY[j]+16;
-                                    } else if(entRot[j]<256){
-                                        newX = entX[j];
-                                        newY = entY[j]+32;
-                                        newXB = entX[j]+16;
-                                        newYB = entY[j]+32;
-                                    }
+	                                    //Calculate these values based on current rotation
+	                                    if(entRot[j]<64){
+	                                        newX = entX[j];
+	                                        newY = entY[j];
+	                                        newXB = entX[j];
+	                                        newYB = entY[j]+16;
+	                                    } else if(entRot[j]<128){
+	                                        newX = entX[j]+32;
+	                                        newY = entY[j];
+	                                        newXB = entX[j]+16;
+	                                        newYB = entY[j];
+	                                    } else if(entRot[j]<192){
+	                                        newX = entX[j]+32;
+	                                        newY = entY[j]+32;
+	                                        newXB = entX[j]+32;
+	                                        newYB = entY[j]+16;
+	                                    } else if(entRot[j]<256){
+	                                        newX = entX[j];
+	                                        newY = entY[j]+32;
+	                                        newXB = entX[j]+16;
+	                                        newYB = entY[j]+32;
+	                                    }
 
-                                    throwFruit(splitTop, newX, newY, entAng[j], 1, entRot[j], entRotSpeed[j]);
-                                    throwFruit(splitBottom, newXB, newYB, entAng[j], 0, entRot[j], entRotSpeed[j]);
-                                    entY[j] = 0;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            index++;
-            i=0;
-            if(index==1000)
-                index=0;
-        } else { //there was not a swipe over the keys
-            if(i < 10){
-            //increment i up to 10
-            //this is the delay between when there is no longer key input and when the lines erase
-                i++;
-            }
-            if(i==10){
-            //if a key hasn't been pressed within the time of i being incremented 10 times, reset values
-                index=0;
-                fat=0;
-            }
-        }
+	                                    throwFruit(splitTop, newX, newY, entAng[j], 1, entRot[j], entRotSpeed[j]);
+	                                    throwFruit(splitBottom, newXB, newYB, entAng[j], 0, entRot[j], entRotSpeed[j]);
+	                                    entY[j] = 0;
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	            index++;
+	            i=0;
+	            if(index==1000)
+	                index=0;
+	        } else { //there was not a swipe over the keys
+	            if(i < 10){
+	            //increment i up to 10
+	            //this is the delay between when there is no longer key input and when the lines erase
+	                i++;
+	            }
+	            if(i==10){
+	            //if a key hasn't been pressed within the time of i being incremented 10 times, reset values
+	                index=0;
+	                fat=0;
+	            }
+	        }
 
-        gfx_BlitBuffer();
+	        gfx_BlitBuffer();
 
-    } while (kb_Data[1] != kb_2nd && bombHit==false); //wait until 2nd key is hit or bomb is hit
-    }
+	    } while (kb_Data[1] != kb_2nd && bombHit==false); //wait until 2nd key is hit or bomb is hit
+		
+	}
 
     gfx_End();
 }
@@ -819,14 +820,3 @@ void keyToXY(){
         if(key == kb_Clear) y=17;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
