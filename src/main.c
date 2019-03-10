@@ -1,7 +1,9 @@
 /*
  *--------------------------------------
- * Program Name:FRTNINJA
+ * Program Name:Fruit Ninja CE
  * Author:Michael2_3B
+ * Special thanks: MateoC for the toolchain and his programming expertise
+ *                 Pieman7373 for artistic help and advice
  * License:MIT
  * Description: A fruit ninja remake for the CE. Swipe the calculator keys to slice fruits!
  *--------------------------------------
@@ -36,6 +38,7 @@ bool lineRect(float x1, float y1, float x2, float y2, float rx, float ry, float 
 bool lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
 void print_string_centered(char *str, int y, int offset, uint8_t c);
 void keyToXY();
+void shake(int s);
 
 /* Put all your globals here */
 // entX and entY is x and y values of sprites.
@@ -48,9 +51,10 @@ void keyToXY();
 double entX[20], entAng[20], entVel[20], entRot[20];
 double entY[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 int entRotSpeed[20];
-int sprites = 9;
+int sprites = 8;
+int xcount = 0;
 gfx_sprite_t *entName[20];
-gfx_sprite_t *sN[9] = {watermelon, apple, pear, pineapple, strawberry, red_apple, grapes, kiwi, bomb};
+gfx_sprite_t *sN[8] = {watermelon, apple, pear, pineapple, strawberry, red_apple, grapes, kiwi};
 gfx_sprite_t *sS[16] = {watermelon_top, watermelon_bottom,
                         apple_top, apple_bottom,
                         pear_top, pear_bottom,
@@ -63,32 +67,27 @@ gfx_sprite_t *sS[16] = {watermelon_top, watermelon_bottom,
 gfx_sprite_t *splitTop;
 gfx_sprite_t *splitBottom;
 const int s=2;
+bool flag=false;
 int eC=0, gameTime=0;
 int x=0, y=0;
 kb_key_t key;
 gfx_UninitedSprite(sprite_buffer, 32, 32); //sprite buffer for rotating sprites
 
 void main(void) {
-    /* Fill in the body of the main function here */
 
     /* Variable Declarations */
-    //kb_key_t key;
     const char *title = "Fruit Ninja CE";
-    const char *start = "Start";
-    const char *options = "Options";
-    const char *info = "Info";
-    const char *quit = "Quit";
+    const char *opt = "Options";
+    const char *inf = "Info";
     char *high = "High: 000";
-    char *xxx = "XXX";
     int xList[1000], yList[1000]; //used for swiping calculations
     int i=0, index=0, fat=0, j, c, jc, jy, randX, menuRock=0, button=0, score=0;
-    bool up=true, flag=false, clockwise=true;
+    bool up=true, clockwise=true;
     bool bombHit=false;
     double speed = 1;
     gfx_Begin();
     gfx_SetDrawBuffer();
     gfx_SetPalette(logo_gfx_pal, sizeof_logo_gfx_pal, 0);
-
 
     /* Menu Loop */
     /* Technically I'm redrawing everything each loop */
@@ -137,14 +136,14 @@ void main(void) {
             gfx_FillCircle(269, 120, 30);
             gfx_FillCircle(230, 195, 30);
 
-            print_string_centered(start, 135, -80, 3);
-            print_string_centered(options, 135, 30, 3);
-            print_string_centered(info, 135, 110, 3);
-            print_string_centered(quit, 210, 70, 3);
+            print_string_centered("Start", 135, -80, 3);
+            print_string_centered(opt, 135, 30, 3);
+            print_string_centered(inf, 135, 110, 3);
+            print_string_centered("Quit", 210, 70, 3);
 
             gfx_TransparentSprite(gfx_RotateSprite(watermelon, sprite_buffer, menuRock), 65, 150);
-            gfx_TransparentSprite(gfx_RotateSprite(grapes, sprite_buffer, menuRock), 174, 100);
-            gfx_TransparentSprite(gfx_RotateSprite(pineapple, sprite_buffer, menuRock), 264, 100);
+            gfx_TransparentSprite(gfx_RotateSprite(grapes, sprite_buffer, menuRock-30), 174, 100);
+            gfx_TransparentSprite(gfx_RotateSprite(pineapple, sprite_buffer, menuRock-30), 255, 97);
             gfx_TransparentSprite(gfx_RotateSprite(bomb, sprite_buffer, menuRock), 214, 170);
 
             keyToXY();
@@ -234,8 +233,8 @@ void main(void) {
                 if(j > 0)
                     gfx_FillCircle(189,120,j);
                 if(jy<240){
-                    gfx_TransparentSprite(gfx_RotateSprite(grape_top,sprite_buffer,menuRock),174,jy);
-                    gfx_TransparentSprite(gfx_RotateSprite(grape_bottom,sprite_buffer,menuRock),174,jy+16+jc);
+                    gfx_TransparentSprite(gfx_RotateSprite(grape_top,sprite_buffer,menuRock-30),174,jy);
+                    gfx_TransparentSprite(gfx_RotateSprite(grape_bottom,sprite_buffer,menuRock-30),174,jy+16+jc);
                 }
                 gfx_BlitBuffer();
 
@@ -258,10 +257,10 @@ void main(void) {
                 gfx_Rectangle(3,3,314,234);
 
                 gfx_SetTextScale(2,2);
-                print_string_centered(options, 24, -3, 1);
-                print_string_centered(options, 25, -2, 2);
-                print_string_centered(options, 26, -1, 3);
-                print_string_centered(options,27,0,0);
+                print_string_centered(opt, 24, -3, 1);
+                print_string_centered(opt, 25, -2, 2);
+                print_string_centered(opt, 26, -1, 3);
+                print_string_centered(opt,27,0,0);
 
                 //gfx_SetTextScale(1,1);
 
@@ -269,7 +268,7 @@ void main(void) {
                 gfx_SetColor(5);
                 gfx_FillCircle(35,35,20);
                 gfx_SetColor(0);
-                gfx_TransparentSprite(gfx_RotateSprite(grapes, sprite_buffer, menuRock), 18, 20);
+                gfx_TransparentSprite(gfx_RotateSprite(grapes, sprite_buffer, menuRock-30), 20, 20);
                 
                 if(clockwise == true)
                 menuRock+=2;
@@ -323,8 +322,8 @@ void main(void) {
                 if(j > 0)
                     gfx_FillCircle(35,35,j);
                 if(jy < 240){
-                    gfx_TransparentSprite(gfx_RotateSprite(grape_top, sprite_buffer, menuRock), 18, jy);
-                    gfx_TransparentSprite(gfx_RotateSprite(grape_bottom, sprite_buffer, menuRock), 18, jy+16+jc);
+                    gfx_TransparentSprite(gfx_RotateSprite(grape_top, sprite_buffer, menuRock-30), 20, jy);
+                    gfx_TransparentSprite(gfx_RotateSprite(grape_bottom, sprite_buffer, menuRock-30), 20, jy+16+jc);
                 }
                 gfx_BlitBuffer();
 
@@ -345,8 +344,8 @@ void main(void) {
                 if(j > 0)
                     gfx_FillCircle(269,120,j);
                 if(jy<240){
-                    gfx_TransparentSprite(gfx_RotateSprite(pineapple_top, sprite_buffer, menuRock), 264, jy);
-                    gfx_TransparentSprite(gfx_RotateSprite(pineapple_bottom, sprite_buffer, menuRock), 264, jy+16+jc);
+                    gfx_TransparentSprite(gfx_RotateSprite(pineapple_top, sprite_buffer, menuRock-30), 255, jy);
+                    gfx_TransparentSprite(gfx_RotateSprite(pineapple_bottom, sprite_buffer, menuRock-30), 255, jy+16+jc);
                 }
                 gfx_BlitBuffer();
 
@@ -355,7 +354,7 @@ void main(void) {
                 jc *= 2;
 
             }while(j>0);
-            //gfx_SetTextScale(2,2);
+            
             do{
                 kb_Scan();
                 gfx_FillScreen(4);
@@ -370,10 +369,10 @@ void main(void) {
                 gfx_Rectangle(3,3,314,234);
 
                 gfx_SetTextScale(2,2);
-                print_string_centered(info, 24, -3, 1);
-                print_string_centered(info, 25, -2, 2);
-                print_string_centered(info, 26, -1, 3);
-                print_string_centered(info,27,0,0);
+                print_string_centered(inf, 24, -3, 1);
+                print_string_centered(inf, 25, -2, 2);
+                print_string_centered(inf, 26, -1, 3);
+                print_string_centered(inf,27,0,0);
 
                 gfx_SetTextScale(1,1);
                 print_string_centered("Created by Michael2_3B", 70, 0, 0);
@@ -387,7 +386,7 @@ void main(void) {
                 gfx_SetColor(5);
                 gfx_FillCircle(35,35,20);
                 gfx_SetColor(0);
-                gfx_TransparentSprite(gfx_RotateSprite(pineapple, sprite_buffer, menuRock), 27, 20);
+                gfx_TransparentSprite(gfx_RotateSprite(pineapple, sprite_buffer, menuRock-30), 20, 20);
                 
                 if(clockwise == true)
                 menuRock+=2;
@@ -441,8 +440,8 @@ void main(void) {
                 if(j > 0)
                     gfx_FillCircle(35,35,j);
                 if(jy < 240){
-                    gfx_TransparentSprite(gfx_RotateSprite(pineapple_top, sprite_buffer, menuRock), 27, jy);
-                    gfx_TransparentSprite(gfx_RotateSprite(pineapple_bottom, sprite_buffer, menuRock), 27, jy+16+jc);
+                    gfx_TransparentSprite(gfx_RotateSprite(pineapple_top, sprite_buffer, menuRock-30), 20, jy);
+                    gfx_TransparentSprite(gfx_RotateSprite(pineapple_bottom, sprite_buffer, menuRock-30), 20, jy+16+jc);
                 }
                 gfx_BlitBuffer();
 
@@ -469,151 +468,143 @@ void main(void) {
     }while(button == 2 || button == 3);
 
     if(button==1){
-    gfx_SetColor(0);
-    gfx_SetTextFGColor(4);
-    gfx_SetTextScale(3,2);
-    flag = false;
+	    gfx_SetColor(0);
+	    gfx_SetTextScale(3,2);
+	    flag = false;
 
 
-    /* ---------------------------------------------------------------------------------------------------------*/
-    /* START THE GAME!!!                                                                                        */
-    /* SLICE DEM FRUITS                                                                                         */
-    /* ---------------------------------------------------------------------------------------------------------*/
+	    /* ---------------------------------------------------------------------------------------------------------*/
+	    /* START THE GAME!!!                                                                                        */
+	    /* SLICE DEM FRUITS                                                                                         */
+	    /* ---------------------------------------------------------------------------------------------------------*/
 
-    do {
-        gameTime++;
-        kb_Scan();
-        gfx_FillScreen(5);
-        gfx_SetTextXY(2,2);
-        gfx_PrintInt(score, 1);
-        gfx_PrintStringXY(xxx, 248, 2);
+	    do {
+	        gameTime++;
+	        kb_Scan();
+	        gfx_FillScreen(5);
+	        gfx_SetTextXY(2,2);
+	        gfx_SetTextFGColor(4);
+	        gfx_PrintInt(score, 1);
 
-        //if there are entities on the screen, move them
-        if(eC > 0)
-            moveEnts();
+	        gfx_PrintStringXY("XXX", 248, 2);
+	        gfx_SetTextFGColor(1);
+	        if(xcount==1)
+	        	gfx_PrintStringXY("X", 248, 2);
+	        if(xcount==2)
+	        	gfx_PrintStringXY("XX", 248, 2);
+	        if(xcount==3)
+	        	gfx_PrintStringXY("XXX", 248, 2);
 
-        //interval to throw fruits on the screen
-        if(gameTime == 100){
-            randX = (int)(30+(rand() % 260));
-            //throwFruit(fruitname,   x,     y, angle, velocity, rotation)
-            throwFruit(sN[rand()%(sprites-1)], randX, 240, PI, 6+(rand()%1), 0, rand()%5);
-            gameTime = 0;
-        }
+	        if(xcount>=3){
+	        	bombHit = true;
+	        }
 
-        //throw a bomb on the screen
-        if((int)(rand() % 200)==100){
-            throwFruit(sN[sprites-1], (int)(30+(rand()%260)), 240, PI, 6+(rand()%1), 0, rand()%5);
-        }
+	        //if there are entities on the screen, move them
+	        if(eC > 0){
+	            moveEnts();
+	        }
 
-        keyToXY();
+	        //interval to throw fruits on the screen
+	        if(gameTime == 100){
+	            randX = (int)(30+(rand() % 260));
+	            //throwFruit(fruitname,   x,     y, angle, velocity, rotation, rotation speed)
+	            throwFruit(sN[rand()%sprites], randX, 240, PI, 6+(rand()%1), 0, rand()%5);
+	            gameTime = 0;
+	        }
 
-        /* If you are reading this, I would like to apologize if you can't follow along with the calculations */
-        /* I can't explain EVERYTHING, but basically I am taking the swiping data and constantly scanning to see */
-        /* if and when a fruit is sliced in half, then making sure to slice that specific fruit in half. */
-        /* I keep track of the amount of entities on the screen (which increments by 1 when the 2 halves of a fruit are put on) */
-        /* I keep track of which sprite is what with arrays, and use those arrays to go off of when referencing entities on the screen */
-        /* I keep track of rotations of sprites so hopefully I can maintain continuity when splitting things in half */
-        /* and more */
-        /* hopefully that clears up a little bit of things */
+	        //throw a bomb on the screen
+	        if((int)(rand() % 200)==100){
+	            throwFruit(bomb, (int)(30+(rand()%260)), 240, PI, 6+(rand()%1), 0, rand()%5);
+	        }
 
-        //if there was a swipe over the keys
-        if(y>0){
-            if(index>0){
-                //If screen location is same as before
-                if(x==xList[index-1] && y==yList[index-1]){
-                    index--; //go back to the same index as before
-                    fat++; //increase line thickness
-                }
-            }
-        //put screen swipe locations in array
-            xList[index] = x;
-            yList[index] = y;
-        
-        //if there is an active line in the array from swiping
-            if(index>0){
-                gfx_Line(xList[index-1],yList[index-1],x,y);
-                if(fat > 0) //fatter line
-                    gfx_Line(xList[index-1],yList[index-1]-1,x,y-1);
-                if(eC > 0){ //if entity count on the screen is greater than 0
-                    for(j=0; j<=20; j++){
-                        //Detect if line touches sprite
-                        if(isSliced(xList[index-1],yList[index-1],x,y,j)){
-                        //Something was sliced
-                            if(entName[j] == sN[sprites-1]){ //bomb was sliced
-                                //YOU HIT A BOMB!!!
-                                animateExplosion(entX[j]+16, entY[j]+16);
-                                bombHit = true;
-                            } else { //fruit was sliced
-                                flag=false;
-                                for(c=0; c<=sprites-1; c++){
-                                    if(entName[j] == sN[c]){
-                                    //split fruit
-                                        splitTop = sS[2*c];
-                                        splitBottom = sS[2*c+1];
-                                        flag = true;
-                                        score++;
-                                    }
-                                }
-                                if(flag==true){
-                                    //new X/Y for top of fruit and new X/Y for bottom of fruit after split
-                                    int newX=0, newY=0, newXB=0, newYB=0;
+	        keyToXY();
 
-                                    //Calculate these values based on current rotation
-                                    if(entRot[j]<64){
-                                        newX = entX[j];
-                                        newY = entY[j];
-                                        newXB = entX[j];
-                                        newYB = entY[j]+16;
-                                    } else if(entRot[j]<128){
-                                        newX = entX[j]+32;
-                                        newY = entY[j];
-                                        newXB = entX[j]+16;
-                                        newYB = entY[j];
-                                    } else if(entRot[j]<192){
-                                        newX = entX[j]+32;
-                                        newY = entY[j]+32;
-                                        newXB = entX[j]+32;
-                                        newYB = entY[j]+16;
-                                    } else if(entRot[j]<256){
-                                        newX = entX[j];
-                                        newY = entY[j]+32;
-                                        newXB = entX[j]+16;
-                                        newYB = entY[j]+32;
-                                    }
+	        /* If you are reading this, I would like to apologize if you can't follow along with the calculations */
+	        /* I can't explain EVERYTHING, but basically I am taking the swiping data and constantly scanning to see */
+	        /* if and when a fruit is sliced in half, then making sure to slice that specific fruit in half. */
+	        /* I keep track of the amount of entities on the screen (which increments by 1 when the 2 halves of a fruit are put on) */
+	        /* I keep track of which sprite is what with arrays, and use those arrays to go off of when referencing entities on the screen */
+	        /* I keep track of rotations of sprites so hopefully I can maintain continuity when splitting things in half */
+	        /* and more */
+	        /* hopefully that clears up a little bit of things */
 
-                                    throwFruit(splitTop, newX, newY, entAng[j], 1, entRot[j], entRotSpeed[j]);
-                                    throwFruit(splitBottom, newXB, newYB, entAng[j], 0, entRot[j], entRotSpeed[j]);
-                                    entY[j] = 0;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            index++;
-            i=0;
-            if(index==1000)
-                index=0;
-        } else { //there was not a swipe over the keys
-            if(i < 10){
-            //increment i up to 10
-            //this is the delay between when there is no longer key input and when the lines erase
-                i++;
-            }
-            if(i==10){
-            //if a key hasn't been pressed within the time of i being incremented 10 times, reset values
-                index=0;
-                fat=0;
-            }
-        }
+	        //if there was a swipe over the keys
+	        if(y>0){
+	            if(index>0){
+	                //If screen location is same as before
+	                if(x==xList[index-1] && y==yList[index-1]){
+	                    index--; //go back to the same index as before
+	                    fat++; //increase line thickness
+	                }
+	            }
+	        	//put screen swipe locations in array
+	            xList[index] = x;
+	            yList[index] = y;
+	        
+	        	//if there is an active line in the array from swiping
+	            if(index>0){
+	                gfx_Line(xList[index-1],yList[index-1],x,y);
+	                if(fat > 0) //fatter line
+	                    gfx_Line(xList[index-1],yList[index-1]-1,x,y-1);
+	                if(eC > 0){ //if entity count on the screen is greater than 0
+	                    for(j=0; j<=20; j++){
+	                        //Detect if line touches sprite
+	                        if(isSliced(xList[index-1],yList[index-1],x,y,j)){
+	                        //Something was sliced
+	                            if(entName[j] == bomb){ //bomb was sliced
+	                                //YOU HIT A BOMB!!!
+	                                animateExplosion(entX[j]+16, entY[j]+16);
+	                                bombHit = true;
+	                            } else { //fruit was sliced
+	                                flag=false;
+	                                for(c=0; c<=sprites; c++){
+	                                    if(entName[j] == sN[c]){
+	                                    //split fruit
+	                                        splitTop = sS[2*c];
+	                                        splitBottom = sS[2*c+1];
+	                                        flag = true;
+	                                        score++;
+	                                    }
+	                                }
+	                                if(flag==true){
+	                                	//throwFruit(fruitname, x, y, angle, velocity, rotation, rotation speed)
+	                                    throwFruit(splitTop, entX[j], entY[j], entAng[j], 2, entRot[j], entRotSpeed[j]-2);
+	                                    throwFruit(splitBottom, entX[j], entY[j], entAng[j], 0, entRot[j], entRotSpeed[j]-2);
 
-        gfx_BlitBuffer();
+	                                    entY[j] = 0;
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	            index++;
+	            i=0;
+	            if(index==1000)
+	                index=0;
+	        } else { //there was not a swipe over the keys
+	            if(i < 10){
+	            //increment i up to 10
+	            //this is the delay between when there is no longer key input and when the lines erase
+	                i++;
+	            }
+	            if(i==10){
+	            //if a key hasn't been pressed within the time of i being incremented 10 times, reset values
+	                index=0;
+	                fat=0;
+	            }
+	        }
 
-    } while (kb_Data[1] != kb_2nd && bombHit==false); //wait until 2nd key is hit or bomb is hit
-    }
+	        gfx_BlitBuffer();
+
+	    } while (kb_Data[1] != kb_2nd && bombHit==false); //wait until 2nd key is hit or bomb is hit
+		
+	}
 
     gfx_End();
 }
+
+/* Additional Functions! */
 
 /* Throw a fruit onto the screen */
 void throwFruit(gfx_sprite_t *fruitname, int curX, int curY, int angle, int velocity, int rotation, int rotSpeed){
@@ -634,18 +625,43 @@ void throwFruit(gfx_sprite_t *fruitname, int curX, int curY, int angle, int velo
 /* Move any entities that are on the screen */
 void moveEnts(){
     int j;
+    int c;
     for(j=0; j<20; j++){
         if(entY[j] > 0){
             gfx_TransparentSprite(gfx_RotateSprite(entName[j], sprite_buffer, entRot[j]), entX[j], entY[j]);
             
             entY[j] -= entVel[j];
             entVel[j] -= 0.1;
+            
             entX[j] += sin(entAng[j]);
             entRot[j] += entRotSpeed[j];
             if(entRot[j] > 255)
                 entRot[j] = 0;
             if(entY[j] >= 240 || entX[j] >= 320 || entX[j] <= -32){
                 entY[j] = 0;
+
+                flag = false;
+	            for(c=0; c<=sprites-1; c++){
+	                if(entName[j] == sN[c]){
+	                	flag = true;
+	                	c=sprites;
+	                }
+	            }
+	            if(flag==true){
+	            	xcount++;
+	            	gfx_SetTextFGColor(1);
+	            	for(c=0; c<=2; c++){
+	            		gfx_SetTextScale(5-c,4-c);
+				        if(xcount==1)
+				        	gfx_PrintStringXY("X", 248, 2);
+				        if(xcount==2)
+				        	gfx_PrintStringXY("XX", 248, 2);
+				        if(xcount==3)
+				        	gfx_PrintStringXY("XXX", 248, 2);
+		            	
+		            	shake(5);
+        			}
+	            }
                 eC--;
             }
         }
@@ -656,7 +672,7 @@ void moveEnts(){
 void animateExplosion(int cx, int cy){
     int i, j, side, sx, sy, sx2, sy2;
     gfx_SetColor(gfx_white);
-    for(i=0; i<35; i++){
+    for(i=0; i<25; i++){
         side = (int)(rand()%4);
         if(side==0){
             sx = 0;
@@ -687,29 +703,15 @@ void animateExplosion(int cx, int cy){
             sy2 = 0;
 
         }
-        if(i>25)
-            gfx_FillCircle(cx, cy, (i-25)*(i-25)*(i-25));
+        if(i>15)
+            gfx_FillCircle(cx, cy, (i-15)*(i-15)*(i-15));
         gfx_Line(cx, cy, sx, sy);
         gfx_Line(cx+1, cy+1, sx+1, sy+1);
         gfx_Line(cx, cy, sx2, sy2);
         gfx_Line(cx+1, cy+1, sx2+1, sy2+1);
         gfx_SwapDraw();
-        gfx_ShiftDown(5);
-        gfx_SwapDraw();
-        gfx_ShiftUp(5);
-        gfx_SwapDraw();
-        gfx_ShiftUp(5);
-        gfx_SwapDraw();
-        gfx_ShiftDown(5);
-        gfx_SwapDraw();
-        gfx_ShiftLeft(5);
-        gfx_SwapDraw();
-        gfx_ShiftRight(5);
-        gfx_SwapDraw();
-        gfx_ShiftRight(5);
-        gfx_SwapDraw();
-        gfx_ShiftLeft(5);
-        gfx_SwapDraw();
+        
+        shake(5);
     }
 }
 
@@ -820,7 +822,25 @@ void keyToXY(){
     }
 }
 
-
+/* Shake the screen */
+void shake(int s){
+	gfx_ShiftDown(s);
+    gfx_SwapDraw();
+    gfx_ShiftUp(s);
+    gfx_SwapDraw();
+    gfx_ShiftUp(s);
+    gfx_SwapDraw();
+    gfx_ShiftDown(s);
+    gfx_SwapDraw();
+    gfx_ShiftLeft(s);
+    gfx_SwapDraw();
+    gfx_ShiftRight(s);
+    gfx_SwapDraw();
+    gfx_ShiftRight(s);
+    gfx_SwapDraw();
+    gfx_ShiftLeft(s);
+    gfx_SwapDraw();
+}
 
 
 

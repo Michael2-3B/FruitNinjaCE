@@ -131,7 +131,7 @@ extern uint8_t kiwi_top_data[1026];
 #define kiwi_bottom_size 1026
 extern uint8_t kiwi_bottom_data[1026];
 #define kiwi_bottom ((gfx_sprite_t*)kiwi_bottom_data)
-#define sizeof_logo_gfx_pal 90
-extern uint16_t logo_gfx_pal[45];
+#define sizeof_logo_gfx_pal 324
+extern uint16_t logo_gfx_pal[162];
 
 #endif
