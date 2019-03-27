@@ -51,6 +51,16 @@ extern uint8_t grapes_data[1026];
 #define kiwi_size 1026
 extern uint8_t kiwi_data[1026];
 #define kiwi ((gfx_sprite_t*)kiwi_data)
+#define banana_width 32
+#define banana_height 32
+#define banana_size 1026
+extern uint8_t banana_data[1026];
+#define banana ((gfx_sprite_t*)banana_data)
+#define pomegranate_width 32
+#define pomegranate_height 32
+#define pomegranate_size 1026
+extern uint8_t pomegranate_data[1026];
+#define pomegranate ((gfx_sprite_t*)pomegranate_data)
 #define watermelon_top_width 32
 #define watermelon_top_height 32
 #define watermelon_top_size 1026
@@ -131,7 +141,17 @@ extern uint8_t kiwi_top_data[1026];
 #define kiwi_bottom_size 1026
 extern uint8_t kiwi_bottom_data[1026];
 #define kiwi_bottom ((gfx_sprite_t*)kiwi_bottom_data)
-#define sizeof_logo_gfx_pal 324
-extern uint16_t logo_gfx_pal[162];
+#define banana_top_width 32
+#define banana_top_height 32
+#define banana_top_size 1026
+extern uint8_t banana_top_data[1026];
+#define banana_top ((gfx_sprite_t*)banana_top_data)
+#define banana_bottom_width 32
+#define banana_bottom_height 32
+#define banana_bottom_size 1026
+extern uint8_t banana_bottom_data[1026];
+#define banana_bottom ((gfx_sprite_t*)banana_bottom_data)
+#define sizeof_logo_gfx_pal 512
+extern uint16_t logo_gfx_pal[256];
 
 #endif
