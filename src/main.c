@@ -1,11 +1,11 @@
 /*
  *------------------------------------------------------------------------------------------/
- * Program Name:Fruit Ninja CE                                                              /
- * Author:Michael2_3B                                                                       /
- * Special thanks: MateoC for the toolchain and his programming expertise                   /
- *                 Pieman7373 for artistic help and advice                                  /
- * License:MIT                                                                              /
- * Description: A fruit ninja remake for the CE. Swipe the calculator keys to slice fruits! /
+ * Program Name:Fruit Ninja CE
+ * Author:Michael2_3B
+ * Special thanks: MateoC for the toolchain and his programming expertise
+ *                 Pieman7373 for artistic help and advice
+ * License:MIT
+ * Description: A fruit ninja remake for the CE. Swipe the calculator keys to slice fruits!
  *------------------------------------------------------------------------------------------/
 */
 
@@ -54,11 +54,11 @@ void debugDisplay();
 double entX[20], entAng[20], entVel[20], entRot[20];
 double entY[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 int entRotSpeed[20];
-int sprites = 9;
+int sprites = 13;
 int xcount = 0;
 gfx_sprite_t *entName[20];
-gfx_sprite_t *sN[9] = {watermelon, apple, pear, pineapple, strawberry, red_apple, grapes, kiwi, banana};
-gfx_sprite_t *sS[18] = {watermelon_top, watermelon_bottom,
+gfx_sprite_t *sN[13] = {watermelon, apple, pear, pineapple, strawberry, red_apple, grapes, kiwi, banana, coconut, lemon, lime, orange};
+gfx_sprite_t *sS[26] = {watermelon_top, watermelon_bottom,
                         apple_top, apple_bottom,
                         pear_top, pear_bottom,
                         pineapple_top, pineapple_bottom,
@@ -66,7 +66,11 @@ gfx_sprite_t *sS[18] = {watermelon_top, watermelon_bottom,
                         red_apple_top, red_apple_bottom,
                         grape_top, grape_bottom,
                         kiwi_top, kiwi_bottom,
-                        banana_top, banana_bottom
+                        banana_top, banana_bottom,
+                        coconut_top, coconut_bottom,
+                        lemon_top, lemon_bottom,
+                        lime_top, lime_bottom,
+                        orange_top, orange_bottom
                     };
 bool flag=false;
 bool pomflag=false;
@@ -480,10 +484,10 @@ void main(void) {
 	            gameTime = 0;
 	        }
 
-            if((score+1)%10==0)
+            if((score+1)%25==0)
                 pomflag = false;
 
-            if(score%10==0 && score>0 && pomflag==false){
+            if(score%25==0 && score>0 && pomflag==false){
 
                 throwFruit(pomegranate, 320, 220, 3*PI/2, 8, 0, rand()%5);
                 eC++;

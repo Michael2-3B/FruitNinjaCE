@@ -3,39 +3,51 @@ opened convpng.ini
 --- logo_gfx (C) ---
 building palette with [256] available indices ...
 built palette with [256] indices.
-palette quality : 100.00%
+palette quality : 99.68%
 transparent color index : 0
 transparent color : 0xFFFF
-29:
- bomb : 100.00%
- strawberry : 100.00%
+41:
+ bomb : 99.39%
+ strawberry : 99.81%
  watermelon : 100.00%
- pineapple : 100.00%
- apple : 100.00%
- red_apple : 100.00%
- pear : 100.00%
+ pineapple : 98.83%
+ apple : 98.75%
+ red_apple : 99.62%
+ pear : 99.70%
  grapes : 100.00%
  kiwi : 100.00%
- banana : 100.00%
- pomegranate : 100.00%
+ banana : 99.98%
+ pomegranate : 99.26%
+ coconut : 99.85%
+ lemon : 99.73%
+ lime : 99.17%
+ orange : 99.59%
  watermelon_top : 100.00%
  watermelon_bottom : 100.00%
- strawberry_top : 100.00%
- strawberry_bottom : 100.00%
- pineapple_top : 100.00%
+ strawberry_top : 99.35%
+ strawberry_bottom : 99.97%
+ pineapple_top : 99.92%
  pineapple_bottom : 100.00%
- pear_top : 100.00%
- pear_bottom : 100.00%
- apple_top : 100.00%
- apple_bottom : 100.00%
- red_apple_top : 100.00%
- red_apple_bottom : 100.00%
+ pear_top : 99.34%
+ pear_bottom : 99.65%
+ apple_top : 98.40%
+ apple_bottom : 99.17%
+ red_apple_top : 99.84%
+ red_apple_bottom : 99.72%
  grape_top : 100.00%
  grape_bottom : 100.00%
  kiwi_top : 100.00%
  kiwi_bottom : 100.00%
- banana_top : 100.00%
+ banana_top : 99.96%
  banana_bottom : 100.00%
+ coconut_top : 99.71%
+ coconut_bottom : 99.85%
+ lemon_top : 99.88%
+ lemon_bottom : 99.76%
+ lime_top : 99.49%
+ lime_bottom : 99.43%
+ orange_top : 98.76%
+ orange_bottom : 99.56%
 
 converted in 0 s
 
