@@ -1,0 +1,182 @@
+Segment  Base   Top    High   Length
+-------- ------ ------ ------ -------
+bss      D031F6 D05B31 D13FD6   293Bh
+header   D1A87F D1A882             3h
+icon     D1A882 D1A9B0           12Eh
+launcher D1A9B0 D1AA00            50h
+libs     D1AA00 D1AA99            99h
+startup  D1AA99 D1AAD4            3Bh
+cleanup  D1AAD4 D1AAE8            14h
+exit     D1AAE8 D1AAEE             6h
+code     D1AAEE D1D77C          2C8Eh
+data     D1D77C D27EFF          A783h
+strsect  D27EFF D28036           137h
+text     D28036 D28036             0h
+
+Label                     Value
+-----------------------   ------
+__findlibload           = D1A9B0
+__program_icon          = D1A887
+__program_description   = D1A989
+__ccleanup              = D1AAD4
+_errno                  = D008DC
+_init                   = D1A882
+_exit                   = D1AAEA
+__exit                  = D1AAC6
+__exitsp                = D1AAC6
+__errsp                 = D1AAC6
+_apple_data             = D1D79E
+_apple_bottom_data      = D1DBA0
+_apple_top_data         = D1DFA2
+_banana_data            = D1E3A4
+_banana_bottom_data     = D1E7A6
+_banana_top_data        = D1EBA8
+_bomb_data              = D1EFAA
+_coconut_data           = D1F3AC
+_coconut_bottom_data    = D1F7AE
+_coconut_top_data       = D1FBB0
+_grape_bottom_data      = D1FFB2
+_grape_top_data         = D203B4
+_grapes_data            = D207B6
+_kiwi_data              = D20BB8
+_kiwi_bottom_data       = D20FBA
+_kiwi_top_data          = D213BC
+_lemon_data             = D217BE
+_lemon_bottom_data      = D21BC0
+_lemon_top_data         = D21FC2
+_lime_data              = D223C4
+_lime_bottom_data       = D227C6
+_lime_top_data          = D22BC8
+_logo_gfx_pal           = D22FCA
+_orange_data            = D231CA
+_orange_bottom_data     = D235CC
+_orange_top_data        = D239CE
+_pear_data              = D23DD0
+_pear_bottom_data       = D241D2
+_pear_top_data          = D245D4
+_pineapple_data         = D249D6
+_pineapple_bottom_data  = D24DD8
+_pineapple_top_data     = D251DA
+_pomegranate_data       = D255DC
+_red_apple_data         = D259DE
+_red_apple_bottom_data  = D25DE0
+_red_apple_top_data     = D261E2
+_strawberry_data        = D265E4
+_strawberry_bottom_data = D269E6
+_strawberry_top_data    = D26DE8
+_watermelon_data        = D271EA
+_watermelon_bottom_data = D275EC
+_watermelon_top_data    = D279EE
+_debugDisplay           = D1D62D
+_swipe                  = D1D527
+_shake                  = D1D4AE
+_keyToXY                = D1D1F1
+_print_string_centered  = D1D1B1
+_lineLine               = D1D00E
+_lineRect               = D1CE12
+_isSliced               = D1CD5C
+_animateExplosion       = D1CB94
+_gameOver               = D1CADC
+_drawEnts               = D1CA1A
+_moveEnts               = D1C762
+_throwFruit             = D1C61B
+_main                   = D1AAEE
+_filename               = D27EEC
+_file                   = D05B2B
+_sprite_buffer          = D27EE9
+_sprite_buffer_data     = D04B29
+_key                    = D04B28
+_yList                  = D03F70
+_xList                  = D033B8
+_prevScore              = D033B5
+_score                  = D033B2
+_seconds                = D27EE6
+_interval               = D27EE3
+_x2                     = D033AF
+_mult                   = D27EE0
+_theCombo               = D27EDD
+_comboWait              = D27EDA
+_combo                  = D27ED7
+_timeSinceLastSlice     = D27ED4
+_volleys                = D27ED1
+_index                  = D27ECE
+_i                      = D27ECB
+_y                      = D27EC8
+_x                      = D27EC5
+_all_eC                 = D27EC2
+_eC                     = D27EBF
+_zenMode                = D033AE
+_comboText              = D27EBE
+_menuflag               = D27EBD
+_pauseflag              = D27EBC
+_flag                   = D27EBB
+_sS                     = D27E6D
+_sN                     = D27E46
+_entName                = D03372
+_xcount                 = D27E43
+_sprites                = D27E40
+_entRotSpeed            = D03336
+_entY                   = D27DF0
+_entRot                 = D032E6
+_entVel                 = D03296
+_entAng                 = D03246
+_entX                   = D031F6
+_abs                    = D1D6B8
+__fadd                  = 000270
+__fcmp                  = 000274
+__fdiv                  = 000278
+__ftol                  = 00027C
+__ltof                  = 000284
+__fmul                  = 000288
+__fsub                  = 000290
+__frameset              = D1D6C4
+__frameset0             = D1D6D2
+__icmpzero              = D1D6DD
+__idivs                 = 00013C
+__imul_b                = 000158
+__imul_b                = 000150
+__irems                 = 00016C
+__iremu                 = 000170
+__ishru_b               = 000184
+__ishru_b               = 000188
+__itol                  = 000194
+_memset                 = D1D6E2
+_rand                   = D1D6F9
+_random                 = D1D706
+__state                 = D27EEF
+__setflag               = 000218
+_srand                  = D1D75D
+_srandom                = D1D765
+__setstate              = D1D76C
+_sin                    = 022118
+_ti_CloseAll            = D1AA0A
+_ti_Open                = D1AA0E
+_ti_Write               = D1AA12
+_ti_Read                = D1AA16
+_ti_SetArchiveStatus    = D1AA1A
+_gfx_Begin              = D1AA27
+_gfx_End                = D1AA2B
+_gfx_SetColor           = D1AA2F
+_gfx_SetPalette         = D1AA33
+_gfx_FillScreen         = D1AA37
+_gfx_SetDraw            = D1AA3B
+_gfx_SwapDraw           = D1AA3F
+_gfx_Blit               = D1AA43
+_gfx_PrintInt           = D1AA47
+_gfx_PrintUInt          = D1AA4B
+_gfx_PrintStringXY      = D1AA4F
+_gfx_SetTextXY          = D1AA53
+_gfx_SetTextFGColor     = D1AA57
+_gfx_GetStringWidth     = D1AA5B
+_gfx_Line               = D1AA5F
+_gfx_FillCircle         = D1AA63
+_gfx_Rectangle          = D1AA67
+_gfx_FillRectangle      = D1AA6B
+_gfx_ShiftDown          = D1AA6F
+_gfx_ShiftUp            = D1AA73
+_gfx_ShiftLeft          = D1AA77
+_gfx_ShiftRight         = D1AA7B
+_gfx_TransparentSprite  = D1AA7F
+_gfx_SetTextScale       = D1AA83
+_gfx_RotateScaleSprite  = D1AA87
+_kb_Scan                = D1AA95
