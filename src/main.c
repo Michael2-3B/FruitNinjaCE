@@ -1,11 +1,11 @@
 /*
  *------------------------------------------------------------------------------------------/
- * Program Name:Fruit Ninja CE                                                              /
- * Author:Michael2_3B                                                                       /
- * Special thanks: MateoC for the toolchain and his programming expertise                   /
- *                 Pieman7373 for artistic help and advice                                  /
- * License:MIT                                                                              /
- * Description: A fruit ninja remake for the CE. Swipe the calculator keys to slice fruits! /
+ * Program Name:Fruit Ninja CE
+ * Author:Michael2_3B
+ * Special thanks: MateoC for the toolchain and his programming expertise
+ *                 Pieman7373 for artistic help and advice
+ * License:MIT
+ * Description: A fruit ninja remake for the CE. Swipe the calculator keys to slice fruits!
  *------------------------------------------------------------------------------------------/
 */
 
@@ -518,8 +518,16 @@ void main(void) {
 	            gameTime = 0;
 	        }
 
+<<<<<<< HEAD
             if(score>0 && score%25<prevScore%25 && zenMode==false){
                 prevScore=score;
+=======
+            if((score+1)%25==0)
+                pomflag = false;
+
+            if(score%25==0 && score>0 && pomflag==false){
+
+>>>>>>> ce4db267c3b94c0048401a5d71e73c3b8a326753
                 throwFruit(pomegranate, 320, 220, 3*PI/2, 8, 0, rand()%5);
                 eC++;
                 all_eC++;
