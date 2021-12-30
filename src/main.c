@@ -1,11 +1,11 @@
 /*
  *------------------------------------------------------------------------------------------/
- * Program Name:Fruit Ninja CE
- * Author:Michael2_3B
- * Special thanks: MateoC for the toolchain and his programming expertise
- *                 Pieman7373 for artistic help and advice
- * License:MIT
- * Description: A fruit ninja remake for the CE. Swipe the calculator keys to slice fruits!
+ * Program Name:Fruit Ninja CE                                                              /
+ * Author:Michael2_3B                                                                       /
+ * Special thanks: MateoC for the toolchain and his programming expertise                   /
+ *                 Pieman7373 for artistic help and advice                                  /
+ * License:MIT                                                                              /
+ * Description: A fruit ninja remake for the CE. Swipe the calculator keys to slice fruits! /
  *------------------------------------------------------------------------------------------/
 */
 
@@ -37,6 +37,7 @@ void moveEnts();
 void drawEnts();
 void gameOver();
 void animateExplosion(int cx, int cy);
+void pomegranateExplosion(int cx, int cy);
 bool isSliced(int x1, int y1, int x2, int y2, int j);
 bool lineRect(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh);
 bool lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
@@ -47,7 +48,7 @@ void swipe();
 void debugDisplay();
 
 /* Put all your globals here */
-// entX and entY is x and y values of sprites.
+// entX and entY are the x and y values of the sprites.
 // entAng is the angle at which they are thrown
 // entVel is the velocity at which they are thrown
 // entRot is the sprites' rotation amount on the screen
@@ -59,6 +60,7 @@ double entY[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 int entRotSpeed[20];
 int sprites = 13;
 int xcount = 0;
+int pomegranate_hits = 0;
 gfx_sprite_t *entName[20];
 gfx_sprite_t *sN[13] = {watermelon, apple, pear, pineapple, strawberry, red_apple, grapes, kiwi, banana, coconut, lemon, lime, orange};
 gfx_sprite_t *sS[26] = {watermelon_top, watermelon_bottom,
@@ -84,6 +86,7 @@ int eC=0, all_eC=0, x=0, y=0, i=0, index=0, volleys=0, timeSinceLastSlice=100, c
 int mult=1;
 int x,x2;
 int interval=100;
+double spriteScale=1.2;
 unsigned int seconds = 0;
 unsigned int score, prevScore;
 int xList[1000], yList[1000];
@@ -169,10 +172,10 @@ void main(void) {
             gfx_FillCircle(269, 120, 30);
             gfx_FillCircle(230, 195, 30);
 
-            print_string_centered("Start", 135, -80, 3);
-            print_string_centered("Zen", 135, 30, 3);
-            print_string_centered(inf, 135, 110, 3);
-            print_string_centered("Quit", 210, 70, 3);
+            print_string_centered("Start [4]", 135, -80, 3);
+            print_string_centered("Zen [9]", 135, 30, 3);
+            print_string_centered("Info [*]", 135, 110, 3);
+            print_string_centered("Quit [3]", 210, 70, 3);
 
             gfx_TransparentSprite(gfx_RotateScaleSprite(watermelon, sprite_buffer, menuRock, 1.3*64), 60, 150);
             gfx_TransparentSprite(gfx_RotateScaleSprite(grapes, sprite_buffer, menuRock, 1.3*64), 168, 97);
@@ -197,7 +200,7 @@ void main(void) {
                     if(kb_Data[5] == kb_9)
                         button = 2;
 
-                    if(kb_Data[6] == kb_Mul || kb_Data[6] == kb_Div) //info
+                    if(kb_Data[6] == kb_Mul) //info
                         button = 3;
 
                     if(kb_Data[5] == kb_3) //exit
@@ -311,17 +314,19 @@ void main(void) {
 
                 gfx_SetTextScale(1,1);
                 print_string_centered("Created by Michael2_3B", 70, 0, 0);
-                print_string_centered("version 0.0.1", 85, 0, 2);
-                print_string_centered("released xx/xx/2020", 100, 0, 0);
+                print_string_centered("version 1.0.0", 85, 0, 0);
+                print_string_centered("1.0.0", 85, 28, 2);
+                print_string_centered("released 12/31/2021", 100, 0, 0);
+                print_string_centered("12/31/2021", 100, 32, 2);
                 print_string_centered("Special thanks to MateoC for his expertise", 115, 0, 0);
-                print_string_centered("and Pieman7373 for artistic help", 130, 0, 0);
-                print_string_centered("based on Halfbrick Studios Fruit Ninja", 220, 0, 0);
+                print_string_centered("and Pieman7373 for artistic help!", 130, 0, 0);
+                print_string_centered("inspired by Halfbrick Studios Fruit Ninja", 220, 0, 0);
 
-                gfx_FillCircle(35,55,25);
+                gfx_FillCircle(35,35,25);
                 gfx_SetColor(5);
-                gfx_FillCircle(35,55,20);
+                gfx_FillCircle(35,35,20);
                 gfx_SetColor(0);
-                gfx_TransparentSprite(gfx_RotateSprite(pineapple, sprite_buffer, menuRock-30), 20, 40);
+                gfx_TransparentSprite(gfx_RotateSprite(pineapple, sprite_buffer, menuRock-30), 20, 20);
                 
                 if(clockwise == true)
                 menuRock+=2;
@@ -339,7 +344,7 @@ void main(void) {
 				swipe();
 
                 gfx_BlitBuffer();
-            } while(kb_Data[2] != kb_Recip);
+            } while(kb_Data[2]!=kb_Recip && kb_Data[6]!=kb_Clear && kb_Data[2]!=kb_Math);
 
             gfx_SetColor(5);
             j=20;
@@ -383,12 +388,14 @@ void main(void) {
         prevScore = 0;
 	    all_eC = 0;
         volleys = 0;
+        pomegranate_hits = 0;
         x = 0;
         x2 = 0;
-        interval = 100;
+        interval = 90;
+        spriteScale = 1.2;
         srandom(0);
         if (zenMode == true){
-            volleys = 6;
+            volleys = 5;
             interval = 50;
             srandom(1);
             rtc_LoadSeconds = rtc_LoadMinutes = rtc_LoadHours = rtc_LoadDays = 0;
@@ -420,7 +427,7 @@ void main(void) {
             if(kb_Data[1]!=kb_Mode) pauseflag = false;
 
 	        // for in-game debugging
-	        debugDisplay();
+	        //debugDisplay();
 
             if(zenMode==false){
     	        gfx_PrintStringXY("XXX", 248, 2);
@@ -467,30 +474,31 @@ void main(void) {
             }
 
 	        //move entities on the screen
-            for(j=-1; j<(int)(all_eC/2); j++)
+            //the game will get slower the more sprites there are on screen, so sometimes the physics need to run multiple times per frame
+            for(j=-1; j<(int)(pow(all_eC,1.25)/2); j++)
                 moveEnts();
 
             drawEnts();
 
 	        //interval to throw fruits on the screen
-	        if(gameTime == interval){
+	        if(gameTime == interval || rand()%100 == 1){
 
 	            //throwFruit(fruitname,   x,     y, angle, velocity, rotation, rotation speed)
                 x = (int)(25+(rand()%250));
-	            throwFruit(sN[rand()%sprites], x, 240, PI, 9+(rand()%1), 0, rand()%5);
+	            throwFruit(sN[rand()%sprites], x, 240, PI, 9+(rand()%1), 0, 1+rand()%5);
 	            eC++;
 	            all_eC++;
 
-                //increase potential volleys every 20 score
-                if(score%10==0 && score>0 && volleys<6)
+                //increase potential volleys every 10 points
+                if(score%10==0 && score>0 && volleys<5)
                     volleys++;
 
                 //throw a bomb on the screen
-                if((int)(rand() % 10)==1 && zenMode==false){
+                if(score>9 && (int)(rand() % 7)==1 && zenMode==false){
                     do{
                         x2 = (int)(25+(rand()%250));
                     }while(abs(x2-x)<=48);
-                    throwFruit(bomb, x2, 240, PI, 9+(rand()%1), 0, rand()%8);
+                    throwFruit(bomb, x2, 240, 3, 9+(rand()%1), 0, rand()%8);
                     eC++;
                     all_eC++;
                     
@@ -508,7 +516,7 @@ void main(void) {
                     //throw more fruits based on game progression
                     if(volleys > 0){
                         for(j=0; j<(int)(rand()%volleys); j++){
-                            throwFruit(sN[rand()%sprites], (int)(25+(rand() % 250)), 240, PI, 9+(rand()%1), 0, rand()%5);
+                            throwFruit(sN[rand()%sprites], (int)(25+(rand() % 250)), 240, PI, 9+(rand()%1), 0, 1+rand()%5);
                             eC++;
                             all_eC++;
                         }
@@ -518,23 +526,15 @@ void main(void) {
 	            gameTime = 0;
 	        }
 
-<<<<<<< HEAD
             if(score>0 && score%25<prevScore%25 && zenMode==false){
                 prevScore=score;
-=======
-            if((score+1)%25==0)
-                pomflag = false;
-
-            if(score%25==0 && score>0 && pomflag==false){
-
->>>>>>> ce4db267c3b94c0048401a5d71e73c3b8a326753
                 throwFruit(pomegranate, 320, 220, 3*PI/2, 8, 0, rand()%5);
                 eC++;
                 all_eC++;
             }
 
             if(timeSinceLastSlice > 10){
-                if(combo > 2){
+                if(combo > 3){
                     comboText = true;
                     prevScore = score;
                     score += combo;
@@ -571,8 +571,12 @@ void main(void) {
 		                                gameOver();
 
 		                            } else if(entName[j] == pomegranate){
+                                        pomegranate_hits++;
                                         prevScore = score;
                                         score++;
+                                        gfx_SetTextXY(entX[j],entY[j]-20);
+                                        gfx_PrintInt(pomegranate_hits,1);
+                                        print_string_centered("+", entY[j]-20, entX[j]-166, 1);
                                     } else { //fruit was sliced
 		                                for(c=0; c<=sprites-1; c++){
 		                                    if(entName[j] == sN[c]){
@@ -589,7 +593,7 @@ void main(void) {
 		                                        if((score%100)==0 && xcount > 0)
 		                                        	xcount--;
 
-                                                if(timeSinceLastSlice <= 10)
+                                                if(timeSinceLastSlice <= 8)
                                                     combo++;
 
 		                                        c = sprites;
@@ -714,51 +718,66 @@ void throwFruit(gfx_sprite_t *fruitname, int curX, int curY, int angle, int velo
 void moveEnts(){
     int j;
     int c;
+    int divisor = 1;
+
+    if(pomegranate_hits > 0)
+        divisor = 2;
+
     for(j=0; j<20; j++){
         if(entY[j] > 0){
-            if(entName[j] == pomegranate){
-                //gfx_SetColor(1);
-                //rotateTriangle(centerX,centerY,size,rotation);
-                //gfx_FillTriangle(entX[j]+19.2,entY[j]-8,entX[j]-8,entY[j]+46.4,entX[j]+46.4,entY[j]+46.4);
-            }
-            
-            entY[j] -= entVel[j];
-            entVel[j] -= 0.2;
+            if(entName[j] == pomegranate && entY[j]>=200 && pomegranate_hits>0){
+                pomegranateExplosion(entX[j],entY[j]);
+                pomegranate_hits = 0;
+                prevScore = score;
+                score += eC;
+                all_eC = 0;
+                eC = 0;
 
-            if(entName[j] == pomegranate){
-                mult = 3;
+                for(j=0; j<20; j++){
+                    entY[j] = 0;
+                }
+
             } else {
-                mult = 1;
-            }
             
-            entX[j] += mult*sin(entAng[j]);
-            entRot[j] += entRotSpeed[j];
-            if(entRot[j] > 255)
-                entRot[j] = 0;
-            if(entY[j] >= 240 || entX[j] >= 320 || entX[j] <= -32){
-                entY[j] = 0;
-                all_eC--;
+                entY[j] -= entVel[j]/divisor;
+                entVel[j] -= 0.2/divisor;
 
-                if(entName[j] == bomb){
-                	eC--;
-                } else if(entName[j] == pomegranate){
-                   eC--;
+                if(entName[j] == pomegranate){
+                    mult = 3;
                 } else {
-                	flag = false;
-	            	for(c=0; c<=sprites-1; c++){
-	                	if(entName[j] == sN[c]){
-	                		flag = true;
-	                		c=sprites;
-	                	}
-	            	}
-	            	if(flag==true){
-                        if(zenMode==false){
-    	            		xcount++;
-    	            		shake(3);
-                        }
-	            		eC--;
-	            	}
-	            }
+                    mult = 1;
+                }
+                
+                entX[j] += mult*sin(entAng[j])/divisor;
+                entRot[j] += entRotSpeed[j]/divisor;
+                if(entRot[j] > 255)
+                    entRot[j] = 0;
+                if(entY[j] >= 240 || entX[j] >= 320 || entX[j] <= -32){
+                    entY[j] = 0;
+                    all_eC--;
+
+                    if(entName[j] == bomb){
+                    	eC--;
+                    } else if(entName[j] == pomegranate){
+                       eC--;
+                    } else {
+                    	flag = false;
+    	            	for(c=0; c<=sprites-1; c++){
+    	                	if(entName[j] == sN[c]){
+    	                		flag = true;
+    	                		c=sprites;
+    	                	}
+    	            	}
+    	            	if(flag==true){
+                            if(zenMode==false && pomegranate_hits==0){
+        	            		xcount++;
+                                print_string_centered("x", 220, entX[j]-140, 1);
+        	            		shake(3);
+                            }
+    	            		eC--;
+    	            	}
+    	            }
+                }
             }
         }
     }
@@ -767,8 +786,13 @@ void moveEnts(){
 void drawEnts(){
     int j;
     for(j=0; j<20; j++){
+        if(entName[j] == pomegranate){
+            spriteScale = 1.5;
+        } else {
+            spriteScale = 1.2;
+        }
         if(entY[j] > 0)
-            gfx_TransparentSprite(gfx_RotateScaleSprite(entName[j], sprite_buffer, entRot[j], 1.2*64), entX[j], entY[j]);
+            gfx_TransparentSprite(gfx_RotateScaleSprite(entName[j], sprite_buffer, entRot[j], spriteScale*64), entX[j], entY[j]);
     }
 }
 
@@ -780,6 +804,9 @@ void gameOver(){
     gfx_SetTextXY(190,130);
     gfx_SetTextFGColor(3);
     gfx_PrintInt(score, 1);
+
+    gfx_SetTextScale(1,1);
+    print_string_centered("press [enter]", 230, 0, 3);
 
     gfx_BlitBuffer();
     flag = false;
@@ -796,7 +823,7 @@ void gameOver(){
 void animateExplosion(int cx, int cy){
     int z, j, side, sx, sy, sx2, sy2;
     gfx_SetColor(0);
-    for(z=0; z<20; z++){
+    for(z=5; z<20; z++){
         side = (int)(rand()%4);
         if(side==0){
             sx = 0;
@@ -828,7 +855,7 @@ void animateExplosion(int cx, int cy){
 
         }
         if(z>8)
-            gfx_FillCircle(cx, cy, (z-12)*(z-12)*(z-12));
+            gfx_FillCircle(cx, cy, pow(z-12,3));
         gfx_Line(cx, cy, sx, sy);
         gfx_Line(cx+1, cy+1, sx+1, sy+1);
         gfx_Line(cx, cy, sx2, sy2);
@@ -837,6 +864,16 @@ void animateExplosion(int cx, int cy){
         
         shake(5);
     }
+}
+
+void pomegranateExplosion(int cx, int cy){
+    int z;
+    gfx_SetColor(gfx_RGBTo1555(248,11,95));
+    for(z=9; z<30; z++){
+        gfx_FillCircle(cx, cy, pow(z-12,3));
+        gfx_SwapDraw();   
+    }
+    gfx_SetColor(0);
 }
 
 /* Detect if line goes through sprite */
